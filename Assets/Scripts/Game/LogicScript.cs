@@ -43,6 +43,7 @@ public class LogicScript : MonoBehaviour
         {
             Debug.Log("Kein neuer Highscore. Aktueller: " + highScore);
         }
+        SpeedManager.ResetSpeed();
     }
 
     public void backtoMenu()

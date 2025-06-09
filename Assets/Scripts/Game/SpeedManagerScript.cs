@@ -20,4 +20,10 @@ public class SpeedManager : MonoBehaviour
         currentSpeed += acceleration * Time.deltaTime;
         currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
     }
+
+    public static void ResetSpeed()
+    {
+        currentSpeed = 5f;
+    }
+
 }
