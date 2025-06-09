@@ -117,7 +117,7 @@ public class BootUpdateManager : MonoBehaviour
     IEnumerator DownloadAndInstall()
     {
         updateText.text = "L‰dt neue Version, Spiel NICHT manuell schlieﬂen...";
-        string tempPath = Path.Combine(Application.dataPath, "UpdateInstaller.exe");
+        string tempPath = Path.Combine(Application.persistentDataPath, "UpdateInstaller.exe");
         installerFilePath = tempPath;
 
         UnityWebRequest request = UnityWebRequest.Get(installerUrl);
