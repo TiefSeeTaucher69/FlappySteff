@@ -4017,7 +4017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRigitbody: {fileID: 1237069324}
-  flapStrength: 15
+  flapStrength: 17
   logic: {fileID: 372941642}
   steffIsAlive: 1
   escapeInGameScreen: {fileID: 1702664564}
@@ -4073,7 +4073,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 4.25
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
