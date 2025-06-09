@@ -9,6 +9,7 @@ public class SettingsSceneHandlerScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Cursor.visible = true; // Cursor sichtbar machen
         // Gespeicherte Einstellung laden, -1 bedeutet kein Eintrag
         int savedIndex = PlayerPrefs.GetInt(PlayerPrefsKey, -1);
 

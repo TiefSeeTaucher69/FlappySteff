@@ -20,6 +20,7 @@ public class MenuHandlerScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Cursor.visible = true; // Ensure the cursor is visible
         int highscore = PlayerPrefs.GetInt("Highscore", 0);
         highscoreText.text = highscore.ToString();
         Debug.Log("Highscore loaded: " + highscore);

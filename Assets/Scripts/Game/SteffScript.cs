@@ -17,6 +17,7 @@ public class SteffScript : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = false;
         logic = GameObject.FindGameObjectsWithTag("Logic")[0].GetComponent<LogicScript>();
         hitAudioSource = GetComponent<AudioSource>();
 
@@ -73,6 +74,7 @@ public class SteffScript : MonoBehaviour
 
     private void PauseGame()
     {
+        Cursor.visible = true;
         isPaused = true;
         settingsManuallyOpened = false;
         Time.timeScale = 0f;
@@ -86,6 +88,7 @@ public class SteffScript : MonoBehaviour
 
     private void ResumeGame()
     {
+        
         isPaused = false;
         Time.timeScale = 1f;
 
@@ -94,10 +97,12 @@ public class SteffScript : MonoBehaviour
 
         if (settingsOnPauseScreen != null)
             settingsOnPauseScreen.SetActive(false);
+        Cursor.visible = false;
     }
 
     public void OpenSettingsOnPause()
     {
+        Cursor.visible = true;
         settingsManuallyOpened = true;
 
         if (settingsOnPauseScreen != null)

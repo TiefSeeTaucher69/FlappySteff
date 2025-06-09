@@ -30,7 +30,7 @@ public class LogicScript : MonoBehaviour
         hasGameOverBeenHandled = true;
 
         gameOverScreen.SetActive(true);
-
+        Cursor.visible = true;  
         if (playerScore > highScore)
         {
             PlayerPrefs.SetInt("Highscore", playerScore);
@@ -44,6 +44,7 @@ public class LogicScript : MonoBehaviour
             Debug.Log("Kein neuer Highscore. Aktueller: " + highScore);
         }
         SpeedManager.ResetSpeed();
+        SpeedManagerCannabisScript.ResetSpeed();
     }
 
     public void backtoMenu()
