@@ -6,7 +6,7 @@ public class LeaderboardSenderScript : MonoBehaviour
 {
     public IEnumerator SendScore(string username, int score)
     {
-        string url = "https://benjoapi.zapto.org/score";
+        string url = "https://api.benjo.online/score";
         var data = new ScoreData { username = username, score = score };
         string json = JsonUtility.ToJson(data);
 

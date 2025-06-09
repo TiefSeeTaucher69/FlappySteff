@@ -9,7 +9,7 @@ public class LeaderboardGetterScript : MonoBehaviour
 
     public IEnumerator GetScores(System.Action<List<ScoreData>> callback)
     {
-        string url = "https://benjoapi.zapto.org/scores";
+        string url = "https://api.benjo.online/scores";
         UnityWebRequest request = UnityWebRequest.Get(url);
         yield return request.SendWebRequest();
 

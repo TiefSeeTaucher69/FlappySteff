@@ -30,7 +30,7 @@ public class FirstOpen : MonoBehaviour
 
     private IEnumerator CheckUsernameExists(string username)
     {
-        string url = "https://benjoapi.zapto.org/username-exists?name=" + UnityWebRequest.EscapeURL(username);
+        string url = "https://api.benjo.online/username-exists?name=" + UnityWebRequest.EscapeURL(username);
         UnityWebRequest request = UnityWebRequest.Get(url);
         yield return request.SendWebRequest();
 
