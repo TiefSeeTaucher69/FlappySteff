@@ -2,36 +2,45 @@ using UnityEngine;
 
 public class PipeSpawnScript : MonoBehaviour
 {
-
     public GameObject pipe;
-    public float spawnRate = 2;
-    private float timer = 0;
-    public float heightOffset = 10;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    public float baseSpawnRate = 3f;       // ursprüngliche Spawnrate bei Startgeschwindigkeit
+    public float minSpawnRate = 0.5f;      // minimale Spawnrate, damit's nicht unspielbar wird
+    public float startSpeed = 5f;          // Startgeschwindigkeit, muss mit SpeedManager übereinstimmen
+    public float heightOffset = 10f;
+
+    private float timer = 0f;
+
     void Start()
     {
-        spawnPipe(); // Spawn the first pipe immediately
+        spawnPipe(); // Erste Pipe direkt spawnen
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (timer < spawnRate)
+        float currentSpeed = SpeedManager.currentSpeed;
+
+        // Spawnrate anpassen, aber Mindestgrenze einhalten
+        float adjustedSpawnRate = Mathf.Clamp(baseSpawnRate * (startSpeed / currentSpeed), minSpawnRate, baseSpawnRate);
+
+        if (timer < adjustedSpawnRate)
         {
             timer += Time.deltaTime;
         }
         else
         {
             spawnPipe();
-            timer = 0;
+            timer = 0f;
         }
-
     }
 
     void spawnPipe()
     {
         float lowestPoint = transform.position.y - heightOffset;
         float highestPoint = transform.position.y + heightOffset;
-        Instantiate(pipe, new Vector3(transform.position.x, Random.Range(lowestPoint, highestPoint)), transform.rotation);
+
+        Instantiate(pipe,
+                    new Vector3(transform.position.x, Random.Range(lowestPoint, highestPoint)),
+                    transform.rotation);
     }
 }

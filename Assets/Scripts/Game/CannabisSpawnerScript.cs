@@ -14,7 +14,6 @@ public class CannabisSpawnerScript : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("CannabisSpawner läuft, Timer: " + timer);
         if (timer < spawnRate)
         {
             timer += Time.deltaTime;
@@ -32,7 +31,6 @@ public class CannabisSpawnerScript : MonoBehaviour
         float lowestPoint = transform.position.y;
         float highestPoint = transform.position.y + heightOffset;
         Instantiate(cannabisPrefab, new Vector3(transform.position.x + 10, Random.Range(lowestPoint, highestPoint)), transform.rotation);
-        Debug.Log("Cannabis spawned at: " + transform.position.x + ", " + Random.Range(lowestPoint, highestPoint));
     }
 
 }
