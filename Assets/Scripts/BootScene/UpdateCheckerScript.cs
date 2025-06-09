@@ -131,7 +131,8 @@ public class BootUpdateManager : MonoBehaviour
             Process.Start(new ProcessStartInfo
             {
                 FileName = installerFilePath,
-                UseShellExecute = true
+                UseShellExecute = true,
+                Verb = "runas" // Erfordert Administratorrechte
             });
 
             Application.Quit(); // Spiel beenden
