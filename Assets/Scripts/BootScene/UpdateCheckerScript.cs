@@ -84,7 +84,7 @@ public class BootUpdateManager : MonoBehaviour
 
             UnityEngine.Debug.Log($"Neueste Version: {latest.tag_name}, Aktuelle Version: {currentVersion}");
 
-            if (latest.tag_name != currentVersion && latest.assets.Length > 0)
+            if (IsNewerVersion(latest.tag_name, currentVersion) && latest.assets.Length > 0)
             {
                 installerUrl = latest.assets[0].browser_download_url;
                 updateText.text = $"Ein neues Update ({latest.tag_name}) ist verfügbar!";
@@ -116,6 +116,7 @@ public class BootUpdateManager : MonoBehaviour
 
     IEnumerator DownloadAndInstall()
     {
+        updateText.text = "Lädt neue Version, Spiel NICHT manuell schließen...";
         string tempPath = Path.Combine(Application.dataPath, "UpdateInstaller.exe");
         installerFilePath = tempPath;
 
@@ -166,4 +167,21 @@ public class BootUpdateManager : MonoBehaviour
     {
         public string browser_download_url;
     }
+
+    private bool IsNewerVersion(string latest, string current)
+    {
+        latest = latest.TrimStart('v');
+        current = current.TrimStart('v');
+
+        System.Version latestVersion, currentVersion;
+
+        if (System.Version.TryParse(latest, out latestVersion) && System.Version.TryParse(current, out currentVersion))
+        {
+            return latestVersion > currentVersion;
+        }
+
+        UnityEngine.Debug.LogWarning("Versionsvergleich fehlgeschlagen!");
+        return false;
+    }
+
 }
