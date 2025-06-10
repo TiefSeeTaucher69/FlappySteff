@@ -17,6 +17,7 @@ public class BootUpdateManager : MonoBehaviour
     public Text updateText;
     public Button updateButton;
     public Button skipButton;
+    public Text releaseNotesText; // Im Inspector zuweisen
 
     private string installerUrl = "";
     private string installerFilePath = "";
@@ -24,10 +25,9 @@ public class BootUpdateManager : MonoBehaviour
     void Start()
     {
         UnityEngine.Debug.Log("Aktueller Build: " + Application.version);
-        // FPS und Auflösung wie gehabt einstellen (optional)
         SetQualitySettings();
 
-        currentVersion = "v" + Application.version; // Aktuelle Version aus Unity-Version
+        currentVersion = "v" + Application.version;
         updatePanel.SetActive(false);
 
         StartCoroutine(CheckForUpdate());
@@ -88,6 +88,7 @@ public class BootUpdateManager : MonoBehaviour
             {
                 installerUrl = latest.assets[0].browser_download_url;
                 updateText.text = $"Ein neues Update ({latest.tag_name}) ist verfügbar!";
+                releaseNotesText.text = latest.body; // Release Notes anzeigen
                 updatePanel.SetActive(true);
 
                 updateButton.onClick.RemoveAllListeners();
@@ -160,6 +161,7 @@ public class BootUpdateManager : MonoBehaviour
     public class GitHubRelease
     {
         public string tag_name;
+        public string body; // Release-Beschreibung
         public Asset[] assets;
     }
 
