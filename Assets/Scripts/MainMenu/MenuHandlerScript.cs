@@ -59,9 +59,12 @@ public class MenuHandlerScript : MonoBehaviour
 
             GameObject entryGO = Instantiate(scoreEntryPrefab, scoreListContainer);
             Debug.Log(entryGO.name);
-            Text text = entryGO.GetComponentInChildren<Text>();
-            if (text != null)
-                text.text = $"{entry.username}: {entry.score}";
+            Text[] texts = entryGO.GetComponentsInChildren<Text>();
+            if (texts.Length >= 2)
+            {
+                texts[0].text = entry.username;
+                texts[1].text = entry.score.ToString();
+            }
         }
     }
 }
