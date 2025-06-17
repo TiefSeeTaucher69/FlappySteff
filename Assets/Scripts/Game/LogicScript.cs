@@ -7,10 +7,20 @@ public class LogicScript : MonoBehaviour
     public int playerScore;
     public int highScore;
     public Text scoreText;
+    public Text cannabisStashText;
     public GameObject gameOverScreen;
     public GameObject menuScreen;
     public LeaderboardSenderScript leaderboardSenderScript;
     private bool hasGameOverBeenHandled = false;
+
+    [ContextMenu("Increase CannabisScore")]
+    public void addCannabisScore(int scoreToAdd)
+    {
+        Debug.Log("Adding cannabis score: " + scoreToAdd);
+        PlayerPrefs.SetInt("CannabisStash", PlayerPrefs.GetInt("CannabisStash", 0) + scoreToAdd);
+        PlayerPrefs.Save();
+        cannabisStashText.text = PlayerPrefs.GetInt("CannabisStash", 0).ToString();
+    }
 
     [ContextMenu("Increase Score")]
     public void addScore(int scoreToAdd)
@@ -43,6 +53,7 @@ public class LogicScript : MonoBehaviour
         {
             Debug.Log("Kein neuer Highscore. Aktueller: " + highScore);
         }
+
         SpeedManager.ResetSpeed();
         SpeedManagerCannabisScript.ResetSpeed();
     }
@@ -57,5 +68,6 @@ public class LogicScript : MonoBehaviour
     {
         highScore = PlayerPrefs.GetInt("Highscore", 0);
         leaderboardSenderScript = GameObject.Find("LeaderboardSender").GetComponent<LeaderboardSenderScript>();
+        cannabisStashText.text = PlayerPrefs.GetInt("CannabisStash", 0).ToString();
     }
 }

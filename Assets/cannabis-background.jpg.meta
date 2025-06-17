@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bdd70900d1ede7347acf8352fa86da86
+guid: 28a550f2c3cb93948abc0f8affa3aa2f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6533211024998655329
-    second: cannabis_0
+      213: 6030487211679298491
+    second: cannabis-background_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,7 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -110,7 +110,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cannabis_0
+      name: cannabis-background_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 28
-        width: 468
-        height: 456
+        x: 0
+        y: 0
+        width: 1344
+        height: 768
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f9a1a4cef2f5555a0800000000000000
-      internalID: -6533211024998655329
+      spriteID: bb33eaa0b2890b350800000000000000
+      internalID: 6030487211679298491
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 273af7d40911e1247b5d8a3985bcdb87
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      cannabis_0: -6533211024998655329
+      cannabis-background_0: 6030487211679298491
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

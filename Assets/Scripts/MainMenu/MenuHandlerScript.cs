@@ -7,6 +7,7 @@ using static LeaderboardSenderScript;
 public class MenuHandlerScript : MonoBehaviour
 {
     public Text highscoreText;
+    public Text cannabisStash;
     public Text usernameText;
     public LeaderboardGetterScript leaderboardGetterScript; // Reference to the script that fetches scores
     public Transform scoreListContainer;
@@ -16,6 +17,12 @@ public class MenuHandlerScript : MonoBehaviour
         // Logic to start the game
         SceneManager.LoadScene("GameScene"); // Replace "GameScene" with the actual name of your game scene
         Debug.Log("Game Started");
+    }
+
+    public void LoadItemShop()
+    {
+        Debug.Log("Loading Item Shop Scene");
+        SceneManager.LoadScene("ItemShop"); // Load the Item Shop scene
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,6 +35,8 @@ public class MenuHandlerScript : MonoBehaviour
         usernameText.text = username.ToString();
         Debug.Log("Starte GetScores Coroutine");
         StartCoroutine(leaderboardGetterScript.GetScores(ShowScores));
+        cannabisStash.text = PlayerPrefs.GetInt("CannabisStash", 0).ToString();
+        Debug.Log("Cannabis stash loaded: " + cannabisStash.text);
     }
 
     // Update is called once per frame
