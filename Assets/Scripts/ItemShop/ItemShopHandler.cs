@@ -41,7 +41,7 @@ public class ItemShopHandler : MonoBehaviour
 
     public void BuyItemInvincible()
     {
-        if (CannabisStash >= InvincibleItemCost && PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1)
+        if (CannabisStash >= InvincibleItemCost && PlayerPrefs.GetInt("HasInvincibleItem", 0) == 0)
         {
             PlayerPrefs.SetInt("HasInvincibleItem", 1);
             Start();
