@@ -32,7 +32,7 @@ public class InvincibilityManager : MonoBehaviour
         if (PlayerPrefs.GetString("ActiveItem", "") != "Invincible") return;
         HandleCooldownUI();
 
-        if (Input.GetKeyDown(KeyCode.E) && !isInvincible && !isOnCooldown)
+        if ((Input.GetKeyDown(KeyCode.E) && !isInvincible && !isOnCooldown) || (Input.GetKeyDown(KeyCode.Mouse0) && !isInvincible && !isOnCooldown))
         {
             if (PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1)
             {

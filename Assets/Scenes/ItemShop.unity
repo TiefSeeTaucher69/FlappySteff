@@ -534,7 +534,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -26, y: -7}
-  m_SizeDelta: {x: 1740.82, y: 454.4}
+  m_SizeDelta: {x: 1740.82, y: 502.14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &495941331
 MonoBehaviour:
@@ -567,9 +567,9 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Usage: E'
+  m_Text: 'Usage: E/Left-Mouse'
 --- !u!222 &495941332
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1967,7 +1967,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 12, y: -7}
-  m_SizeDelta: {x: 1740.82, y: 454.4}
+  m_SizeDelta: {x: 1740.82, y: 502.14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1325616266
 MonoBehaviour:
@@ -2000,9 +2000,9 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Usage: E'
+  m_Text: 'Usage: E/Left-Mouse'
 --- !u!222 &1325616267
 CanvasRenderer:
   m_ObjectHideFlags: 0
