@@ -18,7 +18,8 @@ public class InvincibilityManager : MonoBehaviour
 
     private void Start()
     {
-        if ( PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1)
+
+        if ( PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1 && PlayerPrefs.GetString("ActiveItem", "") == "Invincible")
         {
             invincibilityUI.SetActive(true);
         } else
@@ -28,6 +29,7 @@ public class InvincibilityManager : MonoBehaviour
     }
     void Update()
     {
+        if (PlayerPrefs.GetString("ActiveItem", "") != "Invincible") return;
         HandleCooldownUI();
 
         if (Input.GetKeyDown(KeyCode.E) && !isInvincible && !isOnCooldown)
