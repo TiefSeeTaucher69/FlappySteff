@@ -27,7 +27,7 @@ public class CannabisCollisionScript : MonoBehaviour
         {
             canTrigger = false;
             logic.addCannabisScore(1);
-            StartCoroutine(ResetTriggerCooldown());
+            Destroy(gameObject); // Cannabis-Objekt zerstören
         }
     }
 
