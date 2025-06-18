@@ -5,20 +5,31 @@ using UnityEngine.SceneManagement;
 
 public class ItemShopHandler : MonoBehaviour
 {
+    // Stash
     public Text cannabisStashText;
     public int CannabisStash;
+
+    // Invincible
     public int InvincibleItemCost = 50;
     public Text invincibleItemBuyText;
     public GameObject invincibleBought;
+    public Button invincibleActivateButton;
+    public Text invincibleActivateButtonText;
+
+    // Shrink
     public int ShrinkItemCost = 50;
     public Text shrinkItemBuyText;
     public GameObject shrinkBought;
-
-    public Button invincibleActivateButton;
     public Button shrinkActivateButton;
-
-    public Text invincibleActivateButtonText;
     public Text shrinkActivateButtonText;
+
+    // Laser Shot
+    public int LaserItemCost = 50;
+    public Text laserItemBuyText;
+    public GameObject laserBought;
+    public Button laserActivateButton;
+    public Text laserActivateButtonText;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -51,6 +62,20 @@ public class ItemShopHandler : MonoBehaviour
         else
         {
             shrinkBought.SetActive(false);
+        }
+        // Laser Item
+        if (CannabisStash < LaserItemCost)
+        {
+            laserItemBuyText.color = Color.red;
+        }
+
+        if (PlayerPrefs.GetInt("HasLaserItem", 0) == 1)
+        {
+            laserBought.SetActive(true);
+        }
+        else
+        {
+            laserBought.SetActive(false);
         }
 
         UpdateActiveButtons();
@@ -97,9 +122,25 @@ public class ItemShopHandler : MonoBehaviour
         }
     }
 
+    public void BuyItemLaser()
+    {
+        if (CannabisStash >= LaserItemCost && PlayerPrefs.GetInt("HasLaserItem", 0) == 0)
+        {
+            PlayerPrefs.SetInt("HasLaserItem", 1);
+            PlayerPrefs.SetInt("CannabisStash", CannabisStash - LaserItemCost);
+            PlayerPrefs.Save();
+            Start();
+        }
+        else
+        {
+            Debug.Log("Not enough cannabis stash to buy laser item or already owned.");
+            return;
+        }
+    }
+
     public void SelectActiveItem(string itemName)
     {
-        // z. B. "Invincible" oder "Shrink"
+        // z. B. "Invincible" oder "Shrink" oder "Laser"
         PlayerPrefs.SetString("ActiveItem", itemName);
         PlayerPrefs.Save();
         UpdateActiveButtons();
@@ -131,6 +172,18 @@ public class ItemShopHandler : MonoBehaviour
         {
             shrinkActivateButtonText.text = "Set Active";
             shrinkActivateButton.image.color = Color.red;
+        }
+
+        // Laser Button prüfen
+        if (activeItem == "Laser")
+        {
+            laserActivateButtonText.text = "Active";
+            laserActivateButton.image.color = Color.green;
+        }
+        else
+        {
+            laserActivateButtonText.text = "Set Active";
+            laserActivateButton.image.color = Color.red;
         }
     }
 
