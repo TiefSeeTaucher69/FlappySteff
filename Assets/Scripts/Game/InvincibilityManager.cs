@@ -10,11 +10,22 @@ public class InvincibilityManager : MonoBehaviour
 
     public float invincibilityDuration = 2f;
     public float cooldownTime = 10f;
+    public GameObject invincibilityUI;
 
     private bool isInvincible = false;
     private bool isOnCooldown = false;
     private float cooldownTimer = 0f;
 
+    private void Start()
+    {
+        if ( PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1)
+        {
+            invincibilityUI.SetActive(true);
+        } else
+        {
+            invincibilityUI.SetActive(false);
+        }
+    }
     void Update()
     {
         HandleCooldownUI();

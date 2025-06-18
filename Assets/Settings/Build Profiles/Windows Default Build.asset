@@ -18,8 +18,22 @@ MonoBehaviour:
   m_PlatformId: 4e3c793746204150860bf175a9a41a05
   m_PlatformBuildProfile:
     rid: 5798349484641746944
-  m_OverrideGlobalSceneList: 0
-  m_Scenes: []
+  m_OverrideGlobalSceneList: 1
+  m_Scenes:
+  - m_enabled: 1
+    m_path: Assets/Scenes/BootScene.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/FirstOpen.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/MainMenu.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/ItemShop.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/EscapeScene.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/SettingsScene.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/GameScene.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings:
@@ -163,7 +177,7 @@ MonoBehaviour:
     - line: '|   loadStoreDebugModeEnabled: 0'
     - line: '|   visionOSBundleVersion: 1.0'
     - line: '|   tvOSBundleVersion: 1.0'
-    - line: '|   bundleVersion: 1.0.13'
+    - line: '|   bundleVersion: 1.0.14'
     - line: '|   preloadedAssets:'
     - line: '|   - {fileID: 24100000, guid: a00fc7eea2677454b8f375ef50f72fa5, type:
         2}'
