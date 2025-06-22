@@ -4660,6 +4660,7 @@ GameObject:
   - component: {fileID: 1237069328}
   - component: {fileID: 1237069329}
   - component: {fileID: 1237069330}
+  - component: {fileID: 1237069331}
   m_Layer: 3
   m_Name: Steff
   m_TagString: Steff
@@ -4969,6 +4970,21 @@ MonoBehaviour:
   cooldownTime: 15
   cooldownText: {fileID: 1203746154}
   laserUI: {fileID: 30273933}
+--- !u!114 &1237069331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237069321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f08b05588a3ab04ea12d3774a65b293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RedTrailPrefab: {fileID: 3538283106305551935, guid: 15cb2b749ff984449888a73158aff5ee, type: 3}
+  PurpleTrailPrefab: {fileID: 3753170047100688503, guid: 093360f2e6cf9ce4f8ac8f2a13ca7886, type: 3}
+  BlueTrailPrefab: {fileID: 8942318623357115187, guid: 3432918788d38b64a9582c643ec2e176, type: 3}
 --- !u!1 &1262544906
 GameObject:
   m_ObjectHideFlags: 0
@@ -6738,7 +6754,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 17.400024, y: -9.975098}
+  m_AnchoredPosition: {x: 17.400146, y: -9.975098}
   m_SizeDelta: {x: 488.2004, y: 202.05}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1787073114

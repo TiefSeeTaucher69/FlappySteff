@@ -46,6 +46,16 @@ public class SteffScript : MonoBehaviour
             }
         }
 
+        // --- NEU: Game Over Screen Leertaste-Handler ---
+        if (!steffIsAlive && logic != null && logic.gameOverScreen != null && logic.gameOverScreen.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                logic.restartGame();
+            }
+        }
+        // -------------------------------------------
+
         if (isPaused) return;
 
         if (Input.GetKeyDown(KeyCode.Space) && steffIsAlive)

@@ -2,11 +2,11 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
 public class ItemShopHandler : MonoBehaviour
 {
     // Stash
     public Text cannabisStashText;
+    public Text cannabisStashTextPage2; // <--- NEU
     public int CannabisStash;
 
     // Invincible
@@ -30,11 +30,35 @@ public class ItemShopHandler : MonoBehaviour
     public Button laserActivateButton;
     public Text laserActivateButtonText;
 
+    // Red Trail
+    public int RedTrailCost = 20;
+    public Text redTrailBuyText;
+    public GameObject redTrailBought;
+    public Button redTrailActivateButton;
+    public Text redTrailActivateButtonText;
+
+    // Purple Trail
+    public int PurpleTrailCost = 20;
+    public Text purpleTrailBuyText;
+    public GameObject purpleTrailBought;
+    public Button purpleTrailActivateButton;
+    public Text purpleTrailActivateButtonText;
+
+    // Blue Trail
+    public int BlueTrailCost = 200;
+    public Text blueTrailBuyText;
+    public GameObject blueTrailBought;
+    public Button blueTrailActivateButton;
+    public Text blueTrailActivateButtonText;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         CannabisStash = PlayerPrefs.GetInt("CannabisStash", 0);
         cannabisStashText.text = CannabisStash.ToString();
+        if (cannabisStashTextPage2 != null)
+            cannabisStashTextPage2.text = CannabisStash.ToString();
+
         //Invincible Item
         if (CannabisStash < InvincibleItemCost)
         {
@@ -77,6 +101,27 @@ public class ItemShopHandler : MonoBehaviour
         {
             laserBought.SetActive(false);
         }
+
+        // Red Trail
+        if (CannabisStash < RedTrailCost)
+        {
+            redTrailBuyText.color = Color.red;
+        }
+        redTrailBought.SetActive(PlayerPrefs.GetInt("HasTrailRed", 0) == 1);
+
+        // Purple Trail
+        if (CannabisStash < PurpleTrailCost)
+        {
+            purpleTrailBuyText.color = Color.red;
+        }
+        purpleTrailBought.SetActive(PlayerPrefs.GetInt("HasTrailPurple", 0) == 1);
+
+        // Blue Trail
+        if (CannabisStash < BlueTrailCost)
+        {
+            blueTrailBuyText.color = Color.red;
+        }
+        blueTrailBought.SetActive(PlayerPrefs.GetInt("HasTrailBlue", 0) == 1);
 
         UpdateActiveButtons();
     }
@@ -138,6 +183,39 @@ public class ItemShopHandler : MonoBehaviour
         }
     }
 
+    public void BuyRedTrail()
+    {
+        if (CannabisStash >= RedTrailCost && PlayerPrefs.GetInt("HasTrailRed", 0) == 0)
+        {
+            PlayerPrefs.SetInt("HasTrailRed", 1);
+            PlayerPrefs.SetInt("CannabisStash", CannabisStash - RedTrailCost);
+            PlayerPrefs.Save();
+            Start();
+        }
+    }
+
+    public void BuyPurpleTrail()
+    {
+        if (CannabisStash >= PurpleTrailCost && PlayerPrefs.GetInt("HasTrailPurple", 0) == 0)
+        {
+            PlayerPrefs.SetInt("HasTrailPurple", 1);
+            PlayerPrefs.SetInt("CannabisStash", CannabisStash - PurpleTrailCost);
+            PlayerPrefs.Save();
+            Start();
+        }
+    }
+
+    public void BuyBlueTrail()
+    {
+        if (CannabisStash >= BlueTrailCost && PlayerPrefs.GetInt("HasTrailBlue", 0) == 0)
+        {
+            PlayerPrefs.SetInt("HasTrailBlue", 1);
+            PlayerPrefs.SetInt("CannabisStash", CannabisStash - BlueTrailCost);
+            PlayerPrefs.Save();
+            Start();
+        }
+    }
+
     public void SelectActiveItem(string itemName)
     {
         // z. B. "Invincible" oder "Shrink" oder "Laser"
@@ -146,9 +224,17 @@ public class ItemShopHandler : MonoBehaviour
         UpdateActiveButtons();
     }
 
+    public void SelectActiveTrail(string trailName)
+    {
+        PlayerPrefs.SetString("ActiveTrail", trailName);
+        PlayerPrefs.Save();
+        UpdateActiveButtons();
+    }
+
     void UpdateActiveButtons()
     {
         string activeItem = PlayerPrefs.GetString("ActiveItem", "");
+        string activeTrail = PlayerPrefs.GetString("ActiveTrail", "");
 
         // Invincible Button prüfen
         if (activeItem == "Invincible")
@@ -185,6 +271,15 @@ public class ItemShopHandler : MonoBehaviour
             laserActivateButtonText.text = "Set Active";
             laserActivateButton.image.color = Color.red;
         }
-    }
 
+        // Trails
+        redTrailActivateButtonText.text = activeTrail == "TrailRed" ? "Active" : "Set Active";
+        redTrailActivateButton.image.color = activeTrail == "TrailRed" ? Color.green : Color.red;
+
+        purpleTrailActivateButtonText.text = activeTrail == "TrailPurple" ? "Active" : "Set Active";
+        purpleTrailActivateButton.image.color = activeTrail == "TrailPurple" ? Color.green : Color.red;
+
+        blueTrailActivateButtonText.text = activeTrail == "TrailBlue" ? "Active" : "Set Active";
+        blueTrailActivateButton.image.color = activeTrail == "TrailBlue" ? Color.green : Color.red;
+    }
 }
