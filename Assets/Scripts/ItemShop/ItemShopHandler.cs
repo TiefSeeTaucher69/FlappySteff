@@ -45,7 +45,7 @@ public class ItemShopHandler : MonoBehaviour
     public Text purpleTrailActivateButtonText;
 
     // Blue Trail
-    public int BlueTrailCost = 200;
+    public int BlueTrailCost = 20;
     public Text blueTrailBuyText;
     public GameObject blueTrailBought;
     public Button blueTrailActivateButton;

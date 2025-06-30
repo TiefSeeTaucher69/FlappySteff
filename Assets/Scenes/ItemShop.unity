@@ -376,7 +376,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Buy for:       50'
+  m_Text: 'Buy for:       20'
 --- !u!222 &91801231
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5591,7 +5591,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Buy for:       50'
+  m_Text: 'Buy for:       20'
 --- !u!222 &1500331525
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6558,7 +6558,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Buy for:       50'
+  m_Text: 'Buy for:       20'
 --- !u!222 &1827292945
 CanvasRenderer:
   m_ObjectHideFlags: 0
