@@ -227,7 +227,7 @@ public class DailyReward : MonoBehaviour
             imgTransform.localPosition = startPos + Vector3.up * height;
 
             // Rotation
-            imgTransform.rotation = startRot * Quaternion.Euler(0, 0, rotationAmount * t);
+            imgTransform.rotation = startRot * Quaternion.Euler(0, rotationAmount * t, 0);
 
             yield return null;
         }

@@ -1124,6 +1124,8 @@ MonoBehaviour:
   gameOverScreen: {fileID: 1341624976}
   menuScreen: {fileID: 0}
   leaderboardSenderScript: {fileID: 309510740}
+  cannabisCollectedPrefab: {fileID: 7335568872494477530, guid: 72ca1a320fa54ab43be67d284459ca6e, type: 3}
+  playerHead: {fileID: 1016342268}
 --- !u!4 &372941643
 Transform:
   m_ObjectHideFlags: 0
@@ -3780,6 +3782,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997508407}
   m_CullTransparentMesh: 1
+--- !u!1 &1016342267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1016342268}
+  m_Layer: 3
+  m_Name: Playerhead
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1016342268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016342267}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.33, y: 1.22, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1237069326}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1105092009
 GameObject:
   m_ObjectHideFlags: 0
@@ -4819,6 +4852,7 @@ Transform:
   m_Children:
   - {fileID: 559026102}
   - {fileID: 820746931}
+  - {fileID: 1016342268}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1237069327
