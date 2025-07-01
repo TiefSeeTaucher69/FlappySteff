@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System;
@@ -162,6 +162,9 @@ public class DailyReward : MonoBehaviour
         if (coinAudioSource != null)
             coinAudioSource.Play();
 
+        // 🎁 Animation starten
+        StartCoroutine(AnimateRewardImage());
+
         PlayerPrefs.SetString(rewardKey, currentDate);
         rewardButton.interactable = false;
 
@@ -202,4 +205,37 @@ public class DailyReward : MonoBehaviour
     {
         public string datetime;
     }
+
+    IEnumerator AnimateRewardImage()
+    {
+        Transform imgTransform = rewardImage.transform;
+        Vector3 startPos = imgTransform.localPosition;
+        Quaternion startRot = imgTransform.rotation;
+
+        float jumpHeight = 50f;
+        float rotationAmount = 360f;
+        float duration = 0.6f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            // Springen (parabolisch)
+            float height = 4 * jumpHeight * t * (1 - t);
+            imgTransform.localPosition = startPos + Vector3.up * height;
+
+            // Rotation
+            imgTransform.rotation = startRot * Quaternion.Euler(0, 0, rotationAmount * t);
+
+            yield return null;
+        }
+
+        // Rücksetzen
+        imgTransform.localPosition = startPos;
+        imgTransform.rotation = startRot;
+    }
+
 }
+
