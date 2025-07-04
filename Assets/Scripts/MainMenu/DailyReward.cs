@@ -125,20 +125,20 @@ public class DailyReward : MonoBehaviour
         {
             if (savedDate < serverDate)
             {
-                Debug.Log("✅ Belohnung verfügbar!");
-                ShowPanel("🎁 Belohnung verfügbar!", true);
+                Debug.Log("Tägliche Belohnung verfügbar!");
+                ShowPanel("Tägliche Belohnung verfügbar!", true);
             }
             else
             {
-                Debug.Log("ℹ️ Heute bereits abgeholt.");
+                Debug.Log("Heute bereits abgeholt.");
                 // Panel **nicht** anzeigen, wenn Belohnung heute schon abgeholt wurde
                 panel.SetActive(false);
             }
         }
         else
         {
-            Debug.Log("📌 Kein gespeichertes Datum vorhanden. Erste Belohnung möglich.");
-            ShowPanel("🎁 Belohnung verfügbar!", true);
+            Debug.Log("Kein gespeichertes Datum vorhanden. Erste Belohnung möglich.");
+            ShowPanel("Tägliche Belohnung verfügbar!", true);
         }
     }
 

@@ -14,12 +14,15 @@ public class SteffScript : MonoBehaviour
     public GameObject settingsOnPauseScreen;
     private bool isPaused = false;
     private bool settingsManuallyOpened = false;
+    public float runTime = 0f;
+    public WeeklyMissionManager weeklyMissionManager;
 
     void Start()
     {
         Cursor.visible = false;
         logic = GameObject.FindGameObjectsWithTag("Logic")[0].GetComponent<LogicScript>();
         hitAudioSource = GetComponent<AudioSource>();
+        weeklyMissionManager = FindObjectOfType<WeeklyMissionManager>();
 
         if (escapeInGameScreen != null)
             escapeInGameScreen.SetActive(false);
@@ -46,6 +49,11 @@ public class SteffScript : MonoBehaviour
             }
         }
 
+        if (steffIsAlive)
+        {
+            runTime += Time.deltaTime;
+        }
+
         // --- NEU: Game Over Screen Leertaste-Handler ---
         if (!steffIsAlive && logic != null && logic.gameOverScreen != null && logic.gameOverScreen.activeSelf)
         {
@@ -61,6 +69,10 @@ public class SteffScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && steffIsAlive)
         {
             myRigitbody.linearVelocity = Vector2.up * flapStrength;
+            if (weeklyMissionManager != null)
+            {
+                weeklyMissionManager.UpdateMission(MissionType.TotalJumps, 1);
+            }
         }
 
         Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
@@ -145,4 +157,16 @@ public class SteffScript : MonoBehaviour
         Application.Quit();
         Debug.Log("Application quit requested from pause menu");
     }
+
+    public float GetRunTime()
+    {
+        return runTime;
+    }
+
+    public bool DidSurviveAtLeast(float seconds)
+    {
+        return runTime >= seconds;
+    }
+
+
 }

@@ -4,15 +4,8 @@ public class CannabisMovementScript : MonoBehaviour
 {
     public float moveSpeed = 10f;
     public float deadZone = -40f;
-    public float acceleration = 0.1f;
-    
-
-
-    void Start()
-    {
-        
-    }
-
+    public float simulationRate = 0.01f; // 100 Hz (10ms pro Schritt)
+    private float simulationTimer = 0f;
 
     void Update()
     {
@@ -25,4 +18,6 @@ public class CannabisMovementScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
 }

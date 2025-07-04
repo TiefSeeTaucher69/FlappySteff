@@ -8,10 +8,17 @@ public class VideoSettingsInGameScript : MonoBehaviour
     public Dropdown fpsDropdown; // Dropdown für FPS Cap
     public const string PlayerPrefsKey = "FPSCap"; // Schlüssel für PlayerPrefs
     public Dropdown resolutionDropdown;
+    public Toggle vsyncToggle;
     Resolution[] resolutions;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // VSync laden und setzen
+        int vsyncSetting = PlayerPrefs.GetInt("VSyncEnabled", 0); 
+        QualitySettings.vSyncCount = vsyncSetting;
+        vsyncToggle.isOn = vsyncSetting == 1;
+        vsyncToggle.onValueChanged.AddListener(OnVSyncToggleChanged);
+
         // Gespeicherte Einstellung laden, -1 bedeutet kein Eintrag
         int savedIndex = PlayerPrefs.GetInt(PlayerPrefsKey, -1);
 
@@ -107,6 +114,16 @@ public class VideoSettingsInGameScript : MonoBehaviour
         ApplyResolution(index);
         PlayerPrefs.SetInt("ResolutionIndex", index);
         PlayerPrefs.Save();
+    }
+
+    public void OnVSyncToggleChanged(bool isOn)
+    {
+        QualitySettings.vSyncCount = isOn ? 1 : 0;
+        Debug.Log("VSync " + (isOn ? "aktiviert" : "deaktiviert"));
+        PlayerPrefs.SetInt("VSyncEnabled", isOn ? 1 : 0);
+        PlayerPrefs.Save();
+
+        Debug.Log("VSync " + (isOn ? "aktiviert" : "deaktiviert"));
     }
 
     void ApplyResolution(int index)

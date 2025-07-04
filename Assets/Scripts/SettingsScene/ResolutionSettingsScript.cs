@@ -5,10 +5,17 @@ using UnityEngine.UI;
 public class ResolutionSettingsScript : MonoBehaviour
 {
     public Dropdown resolutionDropdown;
+    public Toggle vsyncToggle;
     Resolution[] resolutions;
 
     void Start()
     {
+        // VSync laden und setzen
+        int vsyncSetting = PlayerPrefs.GetInt("VSyncEnabled", 0);
+        QualitySettings.vSyncCount = vsyncSetting;
+        vsyncToggle.isOn = vsyncSetting == 1;
+        vsyncToggle.onValueChanged.AddListener(OnVSyncToggleChanged);
+
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
 
@@ -42,6 +49,16 @@ public class ResolutionSettingsScript : MonoBehaviour
         ApplyResolution(index);
         PlayerPrefs.SetInt("ResolutionIndex", index);
         PlayerPrefs.Save();
+    }
+
+    public void OnVSyncToggleChanged(bool isOn)
+    {
+        QualitySettings.vSyncCount = isOn ? 1 : 0;
+        Debug.Log("VSync " + (isOn ? "aktiviert" : "deaktiviert"));
+        PlayerPrefs.SetInt("VSyncEnabled", isOn ? 1 : 0);
+        PlayerPrefs.Save();
+
+        Debug.Log("VSync " + (isOn ? "aktiviert" : "deaktiviert"));
     }
 
     void ApplyResolution(int index)

@@ -12,34 +12,54 @@ public class MenuHandlerScript : MonoBehaviour
     public LeaderboardGetterScript leaderboardGetterScript; // Reference to the script that fetches scores
     public Transform scoreListContainer;
     public GameObject scoreEntryPrefab; // Prefab for displaying each score entry
+    public WeeklyMissionUI weeklyMissionUI; // Reference to the WeeklyMissionUI script
+    public WeeklyMissionRewardScript weeklyMissionRewardScript; // Inspector zuweisen
+
     public void StartGame()
     {
-        // Logic to start the game
-        SceneManager.LoadScene("GameScene"); // Replace "GameScene" with the actual name of your game scene
+        SceneManager.LoadScene("GameScene");
         Debug.Log("Game Started");
     }
 
     public void LoadItemShop()
     {
         Debug.Log("Loading Item Shop Scene");
-        SceneManager.LoadScene("ItemShop"); // Load the Item Shop scene
+        SceneManager.LoadScene("ItemShop");
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        Cursor.visible = true; // Ensure the cursor is visible
+        Cursor.visible = true;
+
         int highscore = PlayerPrefs.GetInt("Highscore", 0);
         highscoreText.text = highscore.ToString();
         Debug.Log("Highscore loaded: " + highscore);
+
         string username = PlayerPrefs.GetString("Username", "Guest");
         usernameText.text = username.ToString();
+
         Debug.Log("Starte GetScores Coroutine");
         StartCoroutine(leaderboardGetterScript.GetScores(ShowScores));
+
         cannabisStash.text = PlayerPrefs.GetInt("CannabisStash", 0).ToString();
         Debug.Log("Cannabis stash loaded: " + cannabisStash.text);
+
+        Debug.Log("WeeklyMissionRewardScript im MenuHandler: " + (weeklyMissionRewardScript != null));
+        var missionManager = WeeklyMissionManager.Instance;
+        if (missionManager != null)
+        {
+            missionManager.OnMissionsLoaded += OnMissionsLoaded;
+            missionManager.weeklyMissionRewardScript = weeklyMissionRewardScript;
+            missionManager.OnMissionsLoaded += OnMissionsLoaded;
+            // Jetzt Missionen neu laden und UI danach updaten
+            missionManager.ReloadMissions();
+        }
+        else
+        {
+            Debug.LogWarning("WeeklyMissionManager.Instance ist null im MenuHandler");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -59,7 +79,7 @@ public class MenuHandlerScript : MonoBehaviour
 
         foreach (Transform child in scoreListContainer)
         {
-            Destroy(child.gameObject); // vorherige Einträge entfernen
+            Destroy(child.gameObject);
         }
 
         foreach (var entry in scores)
@@ -74,6 +94,24 @@ public class MenuHandlerScript : MonoBehaviour
                 texts[0].text = entry.username;
                 texts[1].text = entry.score.ToString();
             }
+        }
+    }
+
+    private void OnMissionsLoaded()
+    {
+        Debug.Log("Missions wurden geladen - UpdateUI wird aufgerufen");
+        if (weeklyMissionUI != null)
+        {
+            weeklyMissionUI.UpdateUI();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        var missionManager = WeeklyMissionManager.Instance;
+        if (missionManager != null)
+        {
+            missionManager.OnMissionsLoaded -= OnMissionsLoaded;
         }
     }
 }

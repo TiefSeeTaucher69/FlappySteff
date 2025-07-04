@@ -35,7 +35,9 @@ public class BootUpdateManager : MonoBehaviour
 
     private void SetQualitySettings()
     {
-        QualitySettings.vSyncCount = 0;
+        // VSync aus PlayerPrefs laden, Standard = 0 (aus)
+        int vsyncSetting = PlayerPrefs.GetInt("VSyncEnabled", 0);
+        QualitySettings.vSyncCount = vsyncSetting;
 
         int resIndex = PlayerPrefs.GetInt("ResolutionIndex", -1);
         if (resIndex != -1)

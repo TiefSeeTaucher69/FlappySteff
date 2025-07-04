@@ -14,7 +14,21 @@ public class LogicScript : MonoBehaviour
     public LeaderboardSenderScript leaderboardSenderScript;
     private bool hasGameOverBeenHandled = false;
     [SerializeField] private GameObject cannabisCollectedPrefab;
-    [SerializeField] private Transform playerHead; // Position ¸ber dem Charakter
+    [SerializeField] private Transform playerHead;
+    private int collectedLeavesInCurrentRun = 0;
+    private bool collectedBlattInCurrentRun = false;
+    public SteffScript steff;
+
+    private void Start()
+    {
+        if (steff == null)
+            steff = FindObjectOfType<SteffScript>();
+
+        highScore = PlayerPrefs.GetInt("Highscore", 0);
+        leaderboardSenderScript = GameObject.Find("LeaderboardSender").GetComponent<LeaderboardSenderScript>();
+        cannabisStashText.text = PlayerPrefs.GetInt("CannabisStash", 0).ToString();
+        collectedLeavesInCurrentRun = 0;
+    }
 
     [ContextMenu("Increase CannabisScore")]
     public void addCannabisScore(int scoreToAdd)
@@ -24,7 +38,18 @@ public class LogicScript : MonoBehaviour
         PlayerPrefs.Save();
         cannabisStashText.text = PlayerPrefs.GetInt("CannabisStash", 0).ToString();
 
-        // Animation starten
+        collectedLeavesInCurrentRun += scoreToAdd;
+
+        if (WeeklyMissionManager.Instance != null)
+        {
+            WeeklyMissionManager.Instance.UpdateMission(MissionType.CollectBlatt, scoreToAdd);
+            collectedBlattInCurrentRun = true;
+        }
+        else
+        {
+            Debug.LogWarning("WeeklyMissionManager.Instance ist null in addCannabisScore!");
+        }
+
         if (cannabisCollectedPrefab != null && playerHead != null)
         {
             Debug.Log("Instantiating Cannabis Animation Icon");
@@ -58,7 +83,8 @@ public class LogicScript : MonoBehaviour
         hasGameOverBeenHandled = true;
 
         gameOverScreen.SetActive(true);
-        Cursor.visible = true;  
+        Cursor.visible = true;
+
         if (playerScore > highScore)
         {
             PlayerPrefs.SetInt("Highscore", playerScore);
@@ -72,6 +98,13 @@ public class LogicScript : MonoBehaviour
             Debug.Log("Kein neuer Highscore. Aktueller: " + highScore);
         }
 
+        int score = playerScore;
+        int collectedLeaves = collectedLeavesInCurrentRun;
+        float runTime = steff.runTime;
+        bool survived30Seconds = runTime >= 30f;
+
+        OnRunEnd(score, collectedLeaves, runTime, survived30Seconds);
+
         SpeedManager.ResetSpeed();
         SpeedManagerCannabisScript.ResetSpeed();
     }
@@ -80,13 +113,7 @@ public class LogicScript : MonoBehaviour
     {
         Debug.Log("Going to main menu");
         SceneManager.LoadScene("MainMenu");
-    }
-
-    private void Start()
-    {
-        highScore = PlayerPrefs.GetInt("Highscore", 0);
-        leaderboardSenderScript = GameObject.Find("LeaderboardSender").GetComponent<LeaderboardSenderScript>();
-        cannabisStashText.text = PlayerPrefs.GetInt("CannabisStash", 0).ToString();
+        WeeklyMissionManager.Instance.NotifyMissionsLoaded();
     }
 
     private IEnumerator AnimateCannabisCollected(Transform iconTransform)
@@ -111,7 +138,75 @@ public class LogicScript : MonoBehaviour
             yield return null;
         }
 
-        Destroy(iconTransform.gameObject); // Entferne nach Animation
+        Destroy(iconTransform.gameObject);
     }
 
+    public void OnRunEnd(int score, int collectedLeaves, float runTime, bool survived30Seconds)
+    {
+        Debug.Log($"OnRunEnd called: Score={score}, Leaves={collectedLeaves}, Time={runTime}, Survived30s={survived30Seconds}");
+
+        if (WeeklyMissionManager.Instance != null)
+        {
+            Debug.Log("Updating missions from OnRunEnd");
+
+            // ‚è´ NEU: Gesamtscore berechnen
+            int previousTotalScore = PlayerPrefs.GetInt("TotalScore", 0);
+            int newTotalScore = previousTotalScore + score;
+            PlayerPrefs.SetInt("TotalScore", newTotalScore);
+            PlayerPrefs.Save();
+
+            WeeklyMissionManager.Instance.UpdateMission(MissionType.TotalScore, score);
+
+            WeeklyMissionManager.Instance.UpdateMission(MissionType.TimeInOneRun, (int)runTime);
+            WeeklyMissionManager.Instance.UpdateMission(MissionType.TotalTime, (int)runTime);
+            WeeklyMissionManager.Instance.UpdateMission(MissionType.TotalRuns, 1);
+            WeeklyMissionManager.Instance.UpdateMission(MissionType.CollectInOneRun, collectedLeaves);
+
+            if (collectedBlattInCurrentRun)
+            {
+                WeeklyMissionManager.Instance.UpdateMission(MissionType.CollectStreak, 1);
+                Debug.Log("CollectStreak updated +1");
+            }
+            else
+            {
+                WeeklyMissionManager.Instance.UpdateMission(MissionType.CollectStreak, 0);
+                Debug.Log("CollectStreak reset to 0");
+            }
+
+            if (survived30Seconds)
+            {
+                WeeklyMissionManager.Instance.UpdateMission(MissionType.TimeStreak, 1);
+                Debug.Log("TimeStreak updated +1");
+            }
+            else
+            {
+                WeeklyMissionManager.Instance.UpdateMission(MissionType.TimeStreak, 0);
+                Debug.Log("TimeStreak reset to 0");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("WeeklyMissionManager.Instance ist null in OnRunEnd!");
+        }
+
+        collectedLeavesInCurrentRun = 0;
+        collectedBlattInCurrentRun = false;
+    }
+
+
+    [ContextMenu("Test Mission Update")]
+    public void TestMissionUpdate()
+    {
+        if (WeeklyMissionManager.Instance != null)
+        {
+            Debug.Log("Testing mission update...");
+            WeeklyMissionManager.Instance.UpdateMission(MissionType.CollectBlatt, 1);
+            WeeklyMissionManager.Instance.UpdateMission(MissionType.TotalScore, 100);
+            WeeklyMissionManager.Instance.UpdateMission(MissionType.TotalRuns, 1);
+        }
+        else
+        {
+            Debug.LogWarning("WeeklyMissionManager.Instance ist null!");
+        }
+    }
 }
