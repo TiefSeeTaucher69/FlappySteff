@@ -4953,6 +4953,7 @@ MonoBehaviour:
   settingsOnPauseScreen: {fileID: 50394782}
   runTime: 0
   weeklyMissionManager: {fileID: 0}
+  jointOffset: {fileID: 559026102}
 --- !u!58 &1237069323
 CircleCollider2D:
   m_ObjectHideFlags: 0

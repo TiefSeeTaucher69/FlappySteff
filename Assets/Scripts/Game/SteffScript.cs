@@ -16,6 +16,10 @@ public class SteffScript : MonoBehaviour
     private bool settingsManuallyOpened = false;
     public float runTime = 0f;
     public WeeklyMissionManager weeklyMissionManager;
+    public Transform jointOffset;
+
+
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
@@ -23,6 +27,74 @@ public class SteffScript : MonoBehaviour
         logic = GameObject.FindGameObjectsWithTag("Logic")[0].GetComponent<LogicScript>();
         hitAudioSource = GetComponent<AudioSource>();
         weeklyMissionManager = FindObjectOfType<WeeklyMissionManager>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // === Lade Skin ===
+        string selectedSkin = PlayerPrefs.GetString("ActiveSkin", "steff-bird");
+        Sprite skinSprite = Resources.Load<Sprite>("Skins/" + selectedSkin);
+
+        if (skinSprite != null)
+        {
+            spriteRenderer.sprite = skinSprite;
+
+            // Skalierung abhängig vom Skin
+            if (selectedSkin == "tom-bird")
+            {
+                Debug.Log("Skin '" + selectedSkin + "' gefunden. Skalierung 1.2x1.2x1");
+                transform.localScale = new Vector3(0.8f, 0.7f, 1f); // Tom-Bird Größe
+            }
+            else if (selectedSkin == "benjo-bird")
+            {
+                transform.localScale = new Vector3(0.8f, 0.8f, 1f); // Benjo-Bird Größe
+            }
+            else if (selectedSkin == "bennet-bird")
+            {
+                transform.localScale = new Vector3(0.8f, 0.79f, 1f); // Bennet-Bird Größe
+            }
+            else if (selectedSkin == "jan-bird")
+            {
+                transform.localScale = new Vector3(0.8f, 0.7f, 1f); // Bennet-Bird Größe
+            }
+            else
+            {
+                Debug.Log("Standard-Skin 'steff-bird' verwendet. Skalierung 1x1x1");
+                transform.localScale = new Vector3(0.6f, 0.6f, 1f); // Standardgröße für steff-bird
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Sprite nicht gefunden für Skin: " + selectedSkin + ". Verwende steff-bird als Fallback.");
+            spriteRenderer.sprite = Resources.Load<Sprite>("Skins/steff-bird");
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        }
+
+        // Joint Offset setzen
+        if (jointOffset != null)
+        {
+            switch (selectedSkin)
+            {
+                case "steff-bird":
+                    jointOffset.localPosition = new Vector3(1.57f, -0.19f, -0.1f);
+                    break;
+                case "tom-bird":
+                    jointOffset.localPosition = new Vector3(1.75f, -0.15f, -0.1f);
+                    break;
+                case "benjo-bird":
+                    jointOffset.localPosition = new Vector3(1.7f, +0.1f, -0.1f);
+                    break;
+                case "bennet-bird":
+                    jointOffset.localPosition = new Vector3(1.9f, -0.35f, -0.1f);
+                    break;
+                case "jan-bird":
+                    jointOffset.localPosition = new Vector3(1.8f, -0.19f, -0.1f);
+                    break;
+                default:
+                    jointOffset.localPosition = new Vector3(1.57f, -0.19f, -0.1f);
+                    break;
+            }
+        }
+
+
 
         if (escapeInGameScreen != null)
             escapeInGameScreen.SetActive(false);
@@ -54,7 +126,6 @@ public class SteffScript : MonoBehaviour
             runTime += Time.deltaTime;
         }
 
-        // --- NEU: Game Over Screen Leertaste-Handler ---
         if (!steffIsAlive && logic != null && logic.gameOverScreen != null && logic.gameOverScreen.activeSelf)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -62,7 +133,6 @@ public class SteffScript : MonoBehaviour
                 logic.restartGame();
             }
         }
-        // -------------------------------------------
 
         if (isPaused) return;
 
@@ -110,7 +180,6 @@ public class SteffScript : MonoBehaviour
 
     private void ResumeGame()
     {
-        
         isPaused = false;
         Time.timeScale = 1f;
 
@@ -119,6 +188,7 @@ public class SteffScript : MonoBehaviour
 
         if (settingsOnPauseScreen != null)
             settingsOnPauseScreen.SetActive(false);
+
         Cursor.visible = false;
     }
 
@@ -167,6 +237,4 @@ public class SteffScript : MonoBehaviour
     {
         return runTime >= seconds;
     }
-
-
 }
