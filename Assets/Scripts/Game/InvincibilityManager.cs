@@ -1,12 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI; // Für TextMeshPro: using TMPro;
+using UnityEngine.UI; // Fï¿½r TextMeshPro: using TMPro;
 using System.Collections;
 
 public class InvincibilityManager : MonoBehaviour
 {
     public Collider2D playerCollider;
     public SpriteRenderer spriteRenderer;
-    public Text cooldownText; // Oder TMP_Text für TextMeshPro
+    public Text cooldownText; // Oder TMP_Text fï¿½r TextMeshPro
 
     public float invincibilityDuration = 2f;
     public float cooldownTime = 10f;
@@ -32,7 +32,7 @@ public class InvincibilityManager : MonoBehaviour
         if (PlayerPrefs.GetString("ActiveItem", "") != "Invincible") return;
         HandleCooldownUI();
 
-        if ((Input.GetKeyDown(KeyCode.E) && !isInvincible && !isOnCooldown) || (Input.GetKeyDown(KeyCode.Mouse0) && !isInvincible && !isOnCooldown))
+        if ((Input.GetKeyDown(KeyCode.E) && !isInvincible && !isOnCooldown) || (Input.GetKeyDown(KeyCode.Mouse0) && !isInvincible && !isOnCooldown) || (Input.GetKeyDown(KeyCode.JoystickButton3) && !isInvincible && !isOnCooldown))
         {
             if (PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1)
             {
@@ -88,7 +88,7 @@ public class InvincibilityManager : MonoBehaviour
             blinkInterval = Mathf.Max(0.05f, blinkInterval * 0.8f);
         }
 
-        // Zurücksetzen
+        // Zurï¿½cksetzen
         Color resetColor = spriteRenderer.color;
         resetColor.a = 1f;
         spriteRenderer.color = resetColor;

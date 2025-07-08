@@ -35,7 +35,7 @@ public class ShrinkManager : MonoBehaviour
         if (PlayerPrefs.GetString("ActiveItem", "") != "Shrink") return;
         HandleCooldownUI();
 
-        if ((Input.GetKeyDown(KeyCode.E) && !isShrunk && !isOnCooldown) || (Input.GetKeyDown(KeyCode.Mouse0) && !isShrunk && !isOnCooldown))
+        if ((Input.GetKeyDown(KeyCode.E) && !isShrunk && !isOnCooldown) || (Input.GetKeyDown(KeyCode.Mouse0) && !isShrunk && !isOnCooldown) | (Input.GetKeyDown(KeyCode.JoystickButton3) && !isShrunk && !isOnCooldown))
         {
             if (PlayerPrefs.GetInt("HasShrinkItem", 0) == 1)
             {
