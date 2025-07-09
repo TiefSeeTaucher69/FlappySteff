@@ -62,7 +62,7 @@ public class MenuHandlerScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
         {
             SceneManager.LoadScene("EscapeScene");
         }

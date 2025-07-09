@@ -35,7 +35,7 @@ public class SettingsSceneHandlerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
         {
             SceneManager.LoadScene("EscapeScene");
         }

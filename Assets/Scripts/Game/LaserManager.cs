@@ -32,7 +32,7 @@ public class LaserManager : MonoBehaviour
 
         HandleCooldownUI();
 
-        if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse0)) && !isOnCooldown)
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.JoystickButton3)) && !isOnCooldown)
         {
             if (PlayerPrefs.GetInt("HasLaserItem", 0) == 1)
             {

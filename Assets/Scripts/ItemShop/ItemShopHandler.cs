@@ -13,6 +13,7 @@ public class ItemShopHandler : MonoBehaviour
 
     // Invincible
     public int InvincibleItemCost = 50;
+    public GameObject invincibleItemBuyButton;
     public Text invincibleItemBuyText;
     public GameObject invincibleBought;
     public Button invincibleActivateButton;
@@ -20,6 +21,7 @@ public class ItemShopHandler : MonoBehaviour
 
     // Shrink
     public int ShrinkItemCost = 50;
+    public GameObject shrinkItemBuyButton;
     public Text shrinkItemBuyText;
     public GameObject shrinkBought;
     public Button shrinkActivateButton;
@@ -27,6 +29,7 @@ public class ItemShopHandler : MonoBehaviour
 
     // Laser Shot
     public int LaserItemCost = 50;
+    public GameObject laserItemBuyButton;
     public Text laserItemBuyText;
     public GameObject laserBought;
     public Button laserActivateButton;
@@ -34,6 +37,7 @@ public class ItemShopHandler : MonoBehaviour
 
     // Red Trail
     public int RedTrailCost = 20;
+    public GameObject redTrailBuyButton;
     public Text redTrailBuyText;
     public GameObject redTrailBought;
     public Button redTrailActivateButton;
@@ -41,6 +45,7 @@ public class ItemShopHandler : MonoBehaviour
 
     // Purple Trail
     public int PurpleTrailCost = 20;
+    public GameObject purpleTrailBuyButton;
     public Text purpleTrailBuyText;
     public GameObject purpleTrailBought;
     public Button purpleTrailActivateButton;
@@ -48,6 +53,7 @@ public class ItemShopHandler : MonoBehaviour
 
     // Blue Trail
     public int BlueTrailCost = 20;
+    public GameObject blueTrailBuyButton;
     public Text blueTrailBuyText;
     public GameObject blueTrailBought;
     public Button blueTrailActivateButton;
@@ -55,24 +61,28 @@ public class ItemShopHandler : MonoBehaviour
 
     // Skins
     public int TomBirdCost = 25;
+    public GameObject tomBirdBuyButton;
     public Text tomBirdBuyText;
     public GameObject tomBirdBought;
     public Button tomBirdActivateButton;
     public Text tomBirdActivateButtonText;
 
     public int BennetBirdCost = 25;
+    public GameObject bennetBirdBuyButton;
     public Text bennetBirdBuyText;
     public GameObject bennetBirdBought;
     public Button bennetBirdActivateButton;
     public Text bennetBirdActivateButtonText;
 
     public int BenjoBirdCost = 25;
+    public GameObject benjoBirdBuyButton;
     public Text benjoBirdBuyText;
     public GameObject benjoBirdBought;
     public Button benjoBirdActivateButton;
     public Text benjoBirdActivateButtonText;
 
     public int JanBirdCost = 25;
+    public GameObject janBirdBuyButton;
     public Text janBirdBuyText;
     public GameObject janBirdBought;
     public Button janBirdActivateButton;
@@ -91,90 +101,64 @@ public class ItemShopHandler : MonoBehaviour
         if (cannabisStashTextPage3 != null)
             cannabisStashTextPage3.text = CannabisStash.ToString();
 
-        //Invincible Item
-        if (CannabisStash < InvincibleItemCost)
-        {
-            invincibleItemBuyText.color = Color.red;
-        }
+        // Invincible
+        invincibleItemBuyText.color = CannabisStash < InvincibleItemCost ? Color.red : Color.white;
+        bool hasInvincible = PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1;
+        invincibleBought.SetActive(hasInvincible);
+        invincibleItemBuyButton.SetActive(!hasInvincible);
 
-        if (PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1)
-        {
-            invincibleBought.SetActive(true);
-        }
-        else
-        {
-            invincibleBought.SetActive(false);
-        }
+        // Shrink
+        shrinkItemBuyText.color = CannabisStash < ShrinkItemCost ? Color.red : Color.white;
+        bool hasShrink = PlayerPrefs.GetInt("HasShrinkItem", 0) == 1;
+        shrinkBought.SetActive(hasShrink);
+        shrinkItemBuyButton.SetActive(!hasShrink);
 
-        // Shrink Item
-        if (CannabisStash < ShrinkItemCost)
-        {
-            shrinkItemBuyText.color = Color.red;
-        }
-
-        if (PlayerPrefs.GetInt("HasShrinkItem", 0) == 1)
-        {
-            shrinkBought.SetActive(true);
-        }
-        else
-        {
-            shrinkBought.SetActive(false);
-        }
-
-        // Laser Item
-        if (CannabisStash < LaserItemCost)
-        {
-            laserItemBuyText.color = Color.red;
-        }
-
-        if (PlayerPrefs.GetInt("HasLaserItem", 0) == 1)
-        {
-            laserBought.SetActive(true);
-        }
-        else
-        {
-            laserBought.SetActive(false);
-        }
+        // Laser
+        laserItemBuyText.color = CannabisStash < LaserItemCost ? Color.red : Color.white;
+        bool hasLaser = PlayerPrefs.GetInt("HasLaserItem", 0) == 1;
+        laserBought.SetActive(hasLaser);
+        laserItemBuyButton.SetActive(!hasLaser);
 
         // Red Trail
-        if (CannabisStash < RedTrailCost)
-        {
-            redTrailBuyText.color = Color.red;
-        }
-        redTrailBought.SetActive(PlayerPrefs.GetInt("HasTrailRed", 0) == 1);
+        redTrailBuyText.color = CannabisStash < RedTrailCost ? Color.red : Color.white;
+        bool hasRedTrail = PlayerPrefs.GetInt("HasTrailRed", 0) == 1;
+        redTrailBought.SetActive(hasRedTrail);
+        redTrailBuyButton.SetActive(!hasRedTrail);
 
         // Purple Trail
-        if (CannabisStash < PurpleTrailCost)
-        {
-            purpleTrailBuyText.color = Color.red;
-        }
-        purpleTrailBought.SetActive(PlayerPrefs.GetInt("HasTrailPurple", 0) == 1);
+        purpleTrailBuyText.color = CannabisStash < PurpleTrailCost ? Color.red : Color.white;
+        bool hasPurpleTrail = PlayerPrefs.GetInt("HasTrailPurple", 0) == 1;
+        purpleTrailBought.SetActive(hasPurpleTrail);
+        purpleTrailBuyButton.SetActive(!hasPurpleTrail);
 
         // Blue Trail
-        if (CannabisStash < BlueTrailCost)
-        {
-            blueTrailBuyText.color = Color.red;
-        }
-        blueTrailBought.SetActive(PlayerPrefs.GetInt("HasTrailBlue", 0) == 1);
+        blueTrailBuyText.color = CannabisStash < BlueTrailCost ? Color.red : Color.white;
+        bool hasBlueTrail = PlayerPrefs.GetInt("HasTrailBlue", 0) == 1;
+        blueTrailBought.SetActive(hasBlueTrail);
+        blueTrailBuyButton.SetActive(!hasBlueTrail);
 
         // Skins
-        if (CannabisStash < TomBirdCost)
-            tomBirdBuyText.color = Color.red;
-        tomBirdBought.SetActive(PlayerPrefs.GetInt("HasSkin_tom-bird", 0) == 1);
+        tomBirdBuyText.color = CannabisStash < TomBirdCost ? Color.red : Color.white;
+        bool hasTom = PlayerPrefs.GetInt("HasSkin_tom-bird", 0) == 1;
+        tomBirdBought.SetActive(hasTom);
+        tomBirdBuyButton.SetActive(!hasTom);
 
-        if (CannabisStash < BennetBirdCost)
-            bennetBirdBuyText.color = Color.red;
-        bennetBirdBought.SetActive(PlayerPrefs.GetInt("HasSkin_bennet-bird", 0) == 1);
+        bennetBirdBuyText.color = CannabisStash < BennetBirdCost ? Color.red : Color.white;
+        bool hasBennet = PlayerPrefs.GetInt("HasSkin_bennet-bird", 0) == 1;
+        bennetBirdBought.SetActive(hasBennet);
+        bennetBirdBuyButton.SetActive(!hasBennet);
 
-        if (CannabisStash < BenjoBirdCost)
-            benjoBirdBuyText.color = Color.red;
-        benjoBirdBought.SetActive(PlayerPrefs.GetInt("HasSkin_benjo-bird", 0) == 1);
+        benjoBirdBuyText.color = CannabisStash < BenjoBirdCost ? Color.red : Color.white;
+        bool hasBenjo = PlayerPrefs.GetInt("HasSkin_benjo-bird", 0) == 1;
+        benjoBirdBought.SetActive(hasBenjo);
+        benjoBirdBuyButton.SetActive(!hasBenjo);
 
-        if (CannabisStash < JanBirdCost)
-            janBirdBuyText.color = Color.red;
-        janBirdBought.SetActive(PlayerPrefs.GetInt("HasSkin_jan-bird", 0) == 1);
+        janBirdBuyText.color = CannabisStash < JanBirdCost ? Color.red : Color.white;
+        bool hasJan = PlayerPrefs.GetInt("HasSkin_jan-bird", 0) == 1;
+        janBirdBought.SetActive(hasJan);
+        janBirdBuyButton.SetActive(!hasJan);
 
-        // Wenn noch kein Skin aktiv ist, setze steff-bird als Standard
+        // Default Skin (if not set)
         if (string.IsNullOrEmpty(PlayerPrefs.GetString("ActiveSkin")))
         {
             PlayerPrefs.SetString("ActiveSkin", "steff-bird");
@@ -186,11 +170,13 @@ public class ItemShopHandler : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
         {
             SceneManager.LoadScene("MainMenu");
         }
     }
+
+    // ... Alle Buy-Methoden bleiben unverändert (BuyItemInvincible bis BuyJanBird)
 
     public void BuyItemInvincible()
     {
@@ -225,86 +211,16 @@ public class ItemShopHandler : MonoBehaviour
         }
     }
 
-    public void BuyRedTrail()
-    {
-        if (CannabisStash >= RedTrailCost && PlayerPrefs.GetInt("HasTrailRed", 0) == 0)
-        {
-            PlayerPrefs.SetInt("HasTrailRed", 1);
-            PlayerPrefs.SetInt("CannabisStash", CannabisStash - RedTrailCost);
-            PlayerPrefs.Save();
-            Start();
-        }
-    }
-
-    public void BuyPurpleTrail()
-    {
-        if (CannabisStash >= PurpleTrailCost && PlayerPrefs.GetInt("HasTrailPurple", 0) == 0)
-        {
-            PlayerPrefs.SetInt("HasTrailPurple", 1);
-            PlayerPrefs.SetInt("CannabisStash", CannabisStash - PurpleTrailCost);
-            PlayerPrefs.Save();
-            Start();
-        }
-    }
-
-    public void BuyBlueTrail()
-    {
-        if (CannabisStash >= BlueTrailCost && PlayerPrefs.GetInt("HasTrailBlue", 0) == 0)
-        {
-            PlayerPrefs.SetInt("HasTrailBlue", 1);
-            PlayerPrefs.SetInt("CannabisStash", CannabisStash - BlueTrailCost);
-            PlayerPrefs.Save();
-            Start();
-        }
-    }
-
-    public void BuyTomBird()
-    {
-        if (CannabisStash >= TomBirdCost && PlayerPrefs.GetInt("HasSkin_tom-bird", 0) == 0)
-        {
-            PlayerPrefs.SetInt("HasSkin_tom-bird", 1);
-            PlayerPrefs.SetInt("CannabisStash", CannabisStash - TomBirdCost);
-            PlayerPrefs.Save();
-            Start();
-        }
-    }
-
-    public void BuyBennetBird()
-    {
-        if (CannabisStash >= BennetBirdCost && PlayerPrefs.GetInt("HasSkin_bennet-bird", 0) == 0)
-        {
-            PlayerPrefs.SetInt("HasSkin_bennet-bird", 1);
-            PlayerPrefs.SetInt("CannabisStash", CannabisStash - BennetBirdCost);
-            PlayerPrefs.Save();
-            Start();
-        }
-    }
-
-    public void BuyBenjoBird()
-    {
-        if (CannabisStash >= BenjoBirdCost && PlayerPrefs.GetInt("HasSkin_benjo-bird", 0) == 0)
-        {
-            PlayerPrefs.SetInt("HasSkin_benjo-bird", 1);
-            PlayerPrefs.SetInt("CannabisStash", CannabisStash - BenjoBirdCost);
-            PlayerPrefs.Save();
-            Start();
-        }
-    }
-
-    public void BuyJanBird()
-    {
-        if (CannabisStash >= JanBirdCost && PlayerPrefs.GetInt("HasSkin_jan-bird", 0) == 0)
-        {
-            PlayerPrefs.SetInt("HasSkin_jan-bird", 1);
-            PlayerPrefs.SetInt("CannabisStash", CannabisStash - JanBirdCost);
-            PlayerPrefs.Save();
-            Start();
-        }
-    }
+    public void BuyRedTrail() { if (CannabisStash >= RedTrailCost && PlayerPrefs.GetInt("HasTrailRed", 0) == 0) { PlayerPrefs.SetInt("HasTrailRed", 1); PlayerPrefs.SetInt("CannabisStash", CannabisStash - RedTrailCost); PlayerPrefs.Save(); Start(); } }
+    public void BuyPurpleTrail() { if (CannabisStash >= PurpleTrailCost && PlayerPrefs.GetInt("HasTrailPurple", 0) == 0) { PlayerPrefs.SetInt("HasTrailPurple", 1); PlayerPrefs.SetInt("CannabisStash", CannabisStash - PurpleTrailCost); PlayerPrefs.Save(); Start(); } }
+    public void BuyBlueTrail() { if (CannabisStash >= BlueTrailCost && PlayerPrefs.GetInt("HasTrailBlue", 0) == 0) { PlayerPrefs.SetInt("HasTrailBlue", 1); PlayerPrefs.SetInt("CannabisStash", CannabisStash - BlueTrailCost); PlayerPrefs.Save(); Start(); } }
+    public void BuyTomBird() { if (CannabisStash >= TomBirdCost && PlayerPrefs.GetInt("HasSkin_tom-bird", 0) == 0) { PlayerPrefs.SetInt("HasSkin_tom-bird", 1); PlayerPrefs.SetInt("CannabisStash", CannabisStash - TomBirdCost); PlayerPrefs.Save(); Start(); } }
+    public void BuyBennetBird() { if (CannabisStash >= BennetBirdCost && PlayerPrefs.GetInt("HasSkin_bennet-bird", 0) == 0) { PlayerPrefs.SetInt("HasSkin_bennet-bird", 1); PlayerPrefs.SetInt("CannabisStash", CannabisStash - BennetBirdCost); PlayerPrefs.Save(); Start(); } }
+    public void BuyBenjoBird() { if (CannabisStash >= BenjoBirdCost && PlayerPrefs.GetInt("HasSkin_benjo-bird", 0) == 0) { PlayerPrefs.SetInt("HasSkin_benjo-bird", 1); PlayerPrefs.SetInt("CannabisStash", CannabisStash - BenjoBirdCost); PlayerPrefs.Save(); Start(); } }
+    public void BuyJanBird() { if (CannabisStash >= JanBirdCost && PlayerPrefs.GetInt("HasSkin_jan-bird", 0) == 0) { PlayerPrefs.SetInt("HasSkin_jan-bird", 1); PlayerPrefs.SetInt("CannabisStash", CannabisStash - JanBirdCost); PlayerPrefs.Save(); Start(); } }
 
     public void SelectSkin(string skinName)
     {
-        // steff-bird ist immer verfügbar
         if (skinName == "steff-bird" || PlayerPrefs.GetInt("HasSkin_" + skinName, 0) == 1)
         {
             PlayerPrefs.SetString("ActiveSkin", skinName);
@@ -333,38 +249,14 @@ public class ItemShopHandler : MonoBehaviour
         string activeTrail = PlayerPrefs.GetString("ActiveTrail", "");
         string activeSkin = PlayerPrefs.GetString("ActiveSkin", "steff-bird");
 
-        if (activeItem == "Invincible")
-        {
-            invincibleActivateButtonText.text = "Active";
-            invincibleActivateButton.image.color = Color.green;
-        }
-        else
-        {
-            invincibleActivateButtonText.text = "Set Active";
-            invincibleActivateButton.image.color = Color.red;
-        }
+        invincibleActivateButtonText.text = activeItem == "Invincible" ? "Active" : "Set Active";
+        invincibleActivateButton.image.color = activeItem == "Invincible" ? Color.green : Color.red;
 
-        if (activeItem == "Shrink")
-        {
-            shrinkActivateButtonText.text = "Active";
-            shrinkActivateButton.image.color = Color.green;
-        }
-        else
-        {
-            shrinkActivateButtonText.text = "Set Active";
-            shrinkActivateButton.image.color = Color.red;
-        }
+        shrinkActivateButtonText.text = activeItem == "Shrink" ? "Active" : "Set Active";
+        shrinkActivateButton.image.color = activeItem == "Shrink" ? Color.green : Color.red;
 
-        if (activeItem == "Laser")
-        {
-            laserActivateButtonText.text = "Active";
-            laserActivateButton.image.color = Color.green;
-        }
-        else
-        {
-            laserActivateButtonText.text = "Set Active";
-            laserActivateButton.image.color = Color.red;
-        }
+        laserActivateButtonText.text = activeItem == "Laser" ? "Active" : "Set Active";
+        laserActivateButton.image.color = activeItem == "Laser" ? Color.green : Color.red;
 
         redTrailActivateButtonText.text = activeTrail == "TrailRed" ? "Active" : "Set Active";
         redTrailActivateButton.image.color = activeTrail == "TrailRed" ? Color.green : Color.red;
@@ -387,7 +279,6 @@ public class ItemShopHandler : MonoBehaviour
         janBirdActivateButtonText.text = activeSkin == "jan-bird" ? "Active" : "Set Active";
         janBirdActivateButton.image.color = activeSkin == "jan-bird" ? Color.green : Color.red;
 
-        // Steff Bird Button (default)
         steffBirdActivateButtonText.text = activeSkin == "steff-bird" ? "Active" : "Set Active";
         steffBirdActivateButton.image.color = activeSkin == "steff-bird" ? Color.green : Color.red;
     }

@@ -37,33 +37,33 @@ public class SteffScript : MonoBehaviour
         {
             spriteRenderer.sprite = skinSprite;
 
-            // Skalierung abhängig vom Skin
+            // Skalierung abhï¿½ngig vom Skin
             if (selectedSkin == "tom-bird")
             {
                 Debug.Log("Skin '" + selectedSkin + "' gefunden. Skalierung 1.2x1.2x1");
-                transform.localScale = new Vector3(0.8f, 0.7f, 1f); // Tom-Bird Größe
+                transform.localScale = new Vector3(0.8f, 0.7f, 1f); // Tom-Bird Grï¿½ï¿½e
             }
             else if (selectedSkin == "benjo-bird")
             {
-                transform.localScale = new Vector3(0.8f, 0.8f, 1f); // Benjo-Bird Größe
+                transform.localScale = new Vector3(0.8f, 0.8f, 1f); // Benjo-Bird Grï¿½ï¿½e
             }
             else if (selectedSkin == "bennet-bird")
             {
-                transform.localScale = new Vector3(0.8f, 0.79f, 1f); // Bennet-Bird Größe
+                transform.localScale = new Vector3(0.8f, 0.79f, 1f); // Bennet-Bird Grï¿½ï¿½e
             }
             else if (selectedSkin == "jan-bird")
             {
-                transform.localScale = new Vector3(0.8f, 0.7f, 1f); // Bennet-Bird Größe
+                transform.localScale = new Vector3(0.8f, 0.7f, 1f); // Bennet-Bird Grï¿½ï¿½e
             }
             else
             {
                 Debug.Log("Standard-Skin 'steff-bird' verwendet. Skalierung 1x1x1");
-                transform.localScale = new Vector3(0.6f, 0.6f, 1f); // Standardgröße für steff-bird
+                transform.localScale = new Vector3(0.6f, 0.6f, 1f); // Standardgrï¿½ï¿½e fï¿½r steff-bird
             }
         }
         else
         {
-            Debug.LogWarning("Sprite nicht gefunden für Skin: " + selectedSkin + ". Verwende steff-bird als Fallback.");
+            Debug.LogWarning("Sprite nicht gefunden fï¿½r Skin: " + selectedSkin + ". Verwende steff-bird als Fallback.");
             spriteRenderer.sprite = Resources.Load<Sprite>("Skins/steff-bird");
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
@@ -105,13 +105,24 @@ public class SteffScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && steffIsAlive)
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && steffIsAlive)
         {
             if (!isPaused)
             {
                 PauseGame();
             }
             else if (isPaused && settingsManuallyOpened)
+            {
+                CloseSettingsOnPause();
+            }
+            else
+            {
+                ResumeGame();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.JoystickButton1) && steffIsAlive)
+        {
+            if (isPaused && settingsManuallyOpened)
             {
                 CloseSettingsOnPause();
             }
@@ -128,7 +139,7 @@ public class SteffScript : MonoBehaviour
 
         if (!steffIsAlive && logic != null && logic.gameOverScreen != null && logic.gameOverScreen.activeSelf)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.JoystickButton0))
             {
                 logic.restartGame();
             }
@@ -136,7 +147,7 @@ public class SteffScript : MonoBehaviour
 
         if (isPaused) return;
 
-        if (Input.GetKeyDown(KeyCode.Space) && steffIsAlive)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.JoystickButton0)) && steffIsAlive)
         {
             myRigitbody.linearVelocity = Vector2.up * flapStrength;
             if (weeklyMissionManager != null)
@@ -236,5 +247,10 @@ public class SteffScript : MonoBehaviour
     public bool DidSurviveAtLeast(float seconds)
     {
         return runTime >= seconds;
+    }
+
+    public bool IsPaused()
+    {
+        return isPaused;
     }
 }
