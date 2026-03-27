@@ -15,9 +15,11 @@ public class InvincibilityManager : MonoBehaviour
     private bool isInvincible = false;
     private bool isOnCooldown = false;
     private float cooldownTimer = 0f;
+    private SteffScript steff;
 
     private void Start()
     {
+        steff = FindObjectOfType<SteffScript>();
 
         if ( PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1 && PlayerPrefs.GetString("ActiveItem", "") == "Invincible")
         {
@@ -31,6 +33,8 @@ public class InvincibilityManager : MonoBehaviour
     {
         if (PlayerPrefs.GetString("ActiveItem", "") != "Invincible") return;
         HandleCooldownUI();
+
+        if (steff != null && !steff.steffIsAlive) return;
 
         if ((Input.GetKeyDown(KeyCode.E) && !isInvincible && !isOnCooldown) || (Input.GetKeyDown(KeyCode.Mouse0) && !isInvincible && !isOnCooldown) || (Input.GetKeyDown(KeyCode.JoystickButton3) && !isInvincible && !isOnCooldown))
         {

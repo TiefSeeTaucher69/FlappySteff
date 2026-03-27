@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
 using System;
 using System.Collections;
 
@@ -32,88 +31,24 @@ public class DailyReward : MonoBehaviour
         rewardImage.sprite = rewardSprite;
         panel.SetActive(false);
 
-        StartCoroutine(GetServerDate());
-    }
+        DateTime utcNow = DateTime.UtcNow;
 
-    IEnumerator GetServerDate()
-    {
-        string url = "https://api.benjo.online/time";
-        Debug.Log("🌐 Anfrage an Server: " + url);
-
-        UnityWebRequest request = UnityWebRequest.Get(url);
-        request.SetRequestHeader("User-Agent", "UnityApp/1.0");
-
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.Success)
+        TimeZoneInfo berlinZone = null;
+        try { berlinZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Berlin"); }
+        catch (TimeZoneNotFoundException)
         {
-            string json = request.downloadHandler.text;
-            Debug.Log("✅ Serverantwort erhalten:\n" + json);
-
-            WorldClockApiResponse timeResponse = null;
-            try
-            {
-                timeResponse = JsonUtility.FromJson<WorldClockApiResponse>(json);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("❌ Fehler beim JSON-Parsing: " + ex.Message);
-                ShowPanel("❌ Fehler beim Verarbeiten der Zeitdaten", false);
-                yield break;
-            }
-
-            if (timeResponse != null && !string.IsNullOrEmpty(timeResponse.datetime))
-            {
-                Debug.Log("🕒 Empfangene Zeit (raw): " + timeResponse.datetime);
-                if (DateTime.TryParse(timeResponse.datetime, out DateTime parsedDateTime))
-                {
-                    // DateTimeKind explizit auf UTC setzen
-                    DateTime serverDateTimeUtc = DateTime.SpecifyKind(parsedDateTime, DateTimeKind.Utc);
-
-                    // Zeitzonen-Fallback-Logik
-                    TimeZoneInfo berlinZone = null;
-                    try
-                    {
-                        berlinZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Berlin");
-                    }
-                    catch (TimeZoneNotFoundException)
-                    {
-                        try
-                        {
-                            berlinZone = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time");
-                        }
-                        catch (TimeZoneNotFoundException)
-                        {
-                            Debug.LogWarning("⚠️ Berlin-Zeitzone nicht gefunden, benutze UTC");
-                        }
-                    }
-
-                    DateTime berlinTime = berlinZone != null
-                        ? TimeZoneInfo.ConvertTimeFromUtc(serverDateTimeUtc, berlinZone)
-                        : serverDateTimeUtc; // Fallback: UTC nutzen
-
-                    currentDate = berlinTime.ToString("yyyy-MM-dd");
-                    Debug.Log("📅 Aktuelles Serverdatum (Berlin oder UTC): " + currentDate);
-
-                    CheckRewardAvailability(berlinTime.Date);
-                }
-                else
-                {
-                    Debug.LogError("❌ Fehler beim Parsen von DateTime");
-                    ShowPanel("❌ Fehler beim Lesen des Datums", false);
-                }
-            }
-            else
-            {
-                Debug.LogError("❌ JSON enthält kein gültiges 'datetime'-Feld");
-                ShowPanel("❌ Unerwartetes Serverformat", false);
-            }
+            try { berlinZone = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time"); }
+            catch (TimeZoneNotFoundException) { Debug.LogWarning("⚠️ Berlin-Zeitzone nicht gefunden, benutze UTC"); }
         }
-        else
-        {
-            Debug.LogError("❌ Fehler beim Serverzugriff: " + request.error);
-            ShowPanel("❌ Serverzeit konnte nicht geladen werden", false);
-        }
+
+        DateTime localNow = berlinZone != null
+            ? TimeZoneInfo.ConvertTimeFromUtc(utcNow, berlinZone)
+            : utcNow;
+
+        currentDate = localNow.ToString("yyyy-MM-dd");
+        Debug.Log("📅 Aktuelles Datum: " + currentDate);
+
+        CheckRewardAvailability(localNow.Date);
     }
 
     void CheckRewardAvailability(DateTime serverDate)
@@ -198,12 +133,6 @@ public class DailyReward : MonoBehaviour
         }
 
         canvasGroup.alpha = 1f;
-    }
-
-    [Serializable]
-    public class WorldClockApiResponse
-    {
-        public string datetime;
     }
 
     IEnumerator AnimateRewardImage()

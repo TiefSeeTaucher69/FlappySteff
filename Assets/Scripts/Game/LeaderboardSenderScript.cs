@@ -1,27 +1,22 @@
+using System.Threading.Tasks;
+using Unity.Services.Leaderboards;
 using UnityEngine;
-using UnityEngine.Networking;
-using System.Collections;
 
 public class LeaderboardSenderScript : MonoBehaviour
 {
-    public IEnumerator SendScore(string username, int score)
+    public const string LeaderboardId = "FlappySteffLeaderboard";
+
+    public async Task SendScore(int score)
     {
-        string url = "https://api.benjo.online/score";
-        var data = new ScoreData { username = username, score = score };
-        string json = JsonUtility.ToJson(data);
-
-        UnityWebRequest request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-
-        yield return request.SendWebRequest();
-
-        if (request.result != UnityWebRequest.Result.Success)
-            Debug.LogError("Fehler beim Senden des Scores: " + request.error);
-        else
-            Debug.Log("Score erfolgreich gesendet");
+        try
+        {
+            await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardId, score);
+            Debug.Log("Score erfolgreich gesendet: " + score);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Fehler beim Senden des Scores: " + e.Message);
+        }
     }
 
     [System.Serializable]

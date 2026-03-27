@@ -92,11 +92,21 @@ public class WeeklyMissionManager : MonoBehaviour
         CheckCompletedMissions();
     }
 
+    private int GetWeekSeed(DateTime date)
+    {
+        System.Globalization.Calendar cal = System.Globalization.CultureInfo.InvariantCulture.Calendar;
+        int week = cal.GetWeekOfYear(date, System.Globalization.CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        return date.Year * 100 + week;
+    }
+
     public void GenerateNewWeeklyMissions(DateTime weekStart)
     {
         activeMissions = new List<Mission>();
 
-        var shuffled = allPossibleMissions.OrderBy(x => UnityEngine.Random.value).ToList();
+        int seed = GetWeekSeed(weekStart);
+        Debug.Log("Missions-Seed für diese Woche: " + seed);
+        var rng = new System.Random(seed);
+        var shuffled = allPossibleMissions.OrderBy(x => rng.Next()).ToList();
         var usedIds = new HashSet<string>();
         int added = 0;
 

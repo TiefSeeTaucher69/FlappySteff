@@ -14,10 +14,12 @@ public class ShrinkManager : MonoBehaviour
     private bool isShrunk = false;
     private bool isOnCooldown = false;
     private float cooldownTimer = 0f;
+    private SteffScript steff;
 
     void Start()
     {
         originalScale = transform.localScale;
+        steff = FindObjectOfType<SteffScript>();
 
         // UI nur aktivieren, wenn Item gekauft
         if (PlayerPrefs.GetInt("HasShrinkItem", 0) == 1 && PlayerPrefs.GetString("ActiveItem", "") == "Shrink")
@@ -35,7 +37,11 @@ public class ShrinkManager : MonoBehaviour
         if (PlayerPrefs.GetString("ActiveItem", "") != "Shrink") return;
         HandleCooldownUI();
 
-        if ((Input.GetKeyDown(KeyCode.E) && !isShrunk && !isOnCooldown) || (Input.GetKeyDown(KeyCode.Mouse0) && !isShrunk && !isOnCooldown) | (Input.GetKeyDown(KeyCode.JoystickButton3) && !isShrunk && !isOnCooldown))
+        if (steff != null && !steff.steffIsAlive) return;
+
+        if ((Input.GetKeyDown(KeyCode.E) && !isShrunk && !isOnCooldown) ||
+            (Input.GetKeyDown(KeyCode.Mouse0) && !isShrunk && !isOnCooldown) ||
+            (Input.GetKeyDown(KeyCode.JoystickButton3) && !isShrunk && !isOnCooldown))
         {
             if (PlayerPrefs.GetInt("HasShrinkItem", 0) == 1)
             {
@@ -72,19 +78,10 @@ public class ShrinkManager : MonoBehaviour
     void HandleCooldownUI()
     {
         if (isShrunk)
-        {
-            Debug.Log("Steff ist geschrumpft Text");
             cooldownText.text = "Geschrumpft!";
-        }
         else if (isOnCooldown)
-        {
-            Debug.Log("Steff ist auf Cooldown Text");
             cooldownText.text = $"Bereit in: {cooldownTimer:F1}s";
-        }
         else
-        {
-            Debug.Log("Steff ist bereit Text");
             cooldownText.text = "Bereit!";
-        }
     }
 }

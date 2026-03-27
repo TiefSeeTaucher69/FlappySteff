@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Diagnostics;
 using System.IO;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
 
 public class BootUpdateManager : MonoBehaviour
 {
@@ -22,7 +24,7 @@ public class BootUpdateManager : MonoBehaviour
     private string installerUrl = "";
     private string installerFilePath = "";
 
-    void Start()
+    async void Start()
     {
         UnityEngine.Debug.Log("Aktueller Build: " + Application.version);
         SetQualitySettings();
@@ -30,7 +32,24 @@ public class BootUpdateManager : MonoBehaviour
         currentVersion = "v" + Application.version;
         updatePanel.SetActive(false);
 
+        await InitializeUnityServicesAsync();
+
         StartCoroutine(CheckForUpdate());
+    }
+
+    private async System.Threading.Tasks.Task InitializeUnityServicesAsync()
+    {
+        try
+        {
+            await UnityServices.InitializeAsync();
+            if (!AuthenticationService.Instance.IsSignedIn)
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            UnityEngine.Debug.Log("Unity Services bereit. Player ID: " + AuthenticationService.Instance.PlayerId);
+        }
+        catch (System.Exception e)
+        {
+            UnityEngine.Debug.LogError("Unity Services Initialisierung fehlgeschlagen: " + e.Message);
+        }
     }
 
     private void SetQualitySettings()
@@ -47,14 +66,14 @@ public class BootUpdateManager : MonoBehaviour
             {
                 Resolution res = resolutions[resIndex];
                 Screen.SetResolution(res.width, res.height, FullScreenMode.FullScreenWindow, res.refreshRate);
-                UnityEngine.Debug.Log("Auflösung geladen aus PlayerPrefs: " + res.width + "x" + res.height);
+                UnityEngine.Debug.Log("Auflï¿½sung geladen aus PlayerPrefs: " + res.width + "x" + res.height);
             }
         }
         else
         {
             Resolution nativeRes = Screen.currentResolution;
             Screen.SetResolution(nativeRes.width, nativeRes.height, true);
-            UnityEngine.Debug.Log("Native Auflösung gesetzt: " + nativeRes.width + "x" + nativeRes.height);
+            UnityEngine.Debug.Log("Native Auflï¿½sung gesetzt: " + nativeRes.width + "x" + nativeRes.height);
         }
 
         int fpsIndex = PlayerPrefs.GetInt("FPSCap", 3);
@@ -89,7 +108,7 @@ public class BootUpdateManager : MonoBehaviour
             if (IsNewerVersion(latest.tag_name, currentVersion) && latest.assets.Length > 0)
             {
                 installerUrl = latest.assets[0].browser_download_url;
-                updateText.text = $"Ein neues Update ({latest.tag_name}) ist verfügbar!";
+                updateText.text = $"Ein neues Update ({latest.tag_name}) ist verfï¿½gbar!";
                 releaseNotesText.text = latest.body; // Release Notes anzeigen
                 updatePanel.SetActive(true);
 
@@ -112,14 +131,14 @@ public class BootUpdateManager : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.LogWarning("Update-Prüfung fehlgeschlagen: " + request.error);
+            UnityEngine.Debug.LogWarning("Update-Prï¿½fung fehlgeschlagen: " + request.error);
             LoadNextScene();
         }
     }
 
     IEnumerator DownloadAndInstall()
     {
-        updateText.text = "Lädt neue Version, Spiel NICHT manuell schließen...";
+        updateText.text = "Lï¿½dt neue Version, Spiel NICHT manuell schlieï¿½en...";
         string tempPath = Path.Combine(Application.persistentDataPath, "UpdateInstaller.exe");
         installerFilePath = tempPath;
 

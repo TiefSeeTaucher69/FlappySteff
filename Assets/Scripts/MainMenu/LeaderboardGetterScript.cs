@@ -1,47 +1,40 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.Services.Leaderboards;
 using UnityEngine;
-using UnityEngine.Networking;
 using static LeaderboardSenderScript;
 
 public class LeaderboardGetterScript : MonoBehaviour
 {
     [Header("UI")]
-    public GameObject errorPanel;  // Das UI Panel für Fehler
+    public GameObject errorPanel;
 
-    public IEnumerator GetScores(System.Action<List<ScoreData>> callback)
+    public async Task GetScores(System.Action<List<ScoreData>> callback)
     {
-        string url = "https://api.benjo.online/scores";
-        UnityWebRequest request = UnityWebRequest.Get(url);
-        yield return request.SendWebRequest();
-
-        if (request.result != UnityWebRequest.Result.Success)
+        try
         {
-            Debug.LogError("Fehler beim Laden des Scoreboards: " + request.error);
+            var response = await LeaderboardsService.Instance.GetScoresAsync(LeaderboardSenderScript.LeaderboardId);
 
-            // Fehler-Panel anzeigen, falls zugewiesen
-            if (errorPanel != null)
-                errorPanel.SetActive(true);
-
-            callback(null);
-        }
-        else
-        {
-            // Fehler-Panel ausblenden, falls sichtbar
             if (errorPanel != null && errorPanel.activeSelf)
                 errorPanel.SetActive(false);
 
-            string json = request.downloadHandler.text;
-            Debug.Log("Scoreboard JSON: " + json);
-            ScoreList list = JsonUtility.FromJson<ScoreList>("{\"scores\":" + json + "}");
-            Debug.Log("ScoreList count: " + (list.scores != null ? list.scores.Count : 0));
-            callback(list.scores);
+            var scores = new List<ScoreData>();
+            foreach (var entry in response.Results)
+            {
+                scores.Add(new ScoreData
+                {
+                    username = entry.PlayerName,
+                    score = (int)entry.Score
+                });
+            }
+            callback(scores);
         }
-    }
-
-    [System.Serializable]
-    public class ScoreList
-    {
-        public List<ScoreData> scores;
+        catch (System.Exception e)
+        {
+            Debug.LogError("Fehler beim Laden des Scoreboards: " + e.Message);
+            if (errorPanel != null)
+                errorPanel.SetActive(true);
+            callback(null);
+        }
     }
 }

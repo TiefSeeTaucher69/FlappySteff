@@ -1,62 +1,48 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Networking;
-using System.Collections;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 
 public class FirstOpen : MonoBehaviour
 {
     public InputField usernameInput;
     public Text feedbackText;
 
-    [System.Serializable]
-    public class UsernameCheckResponse
+    async void Start()
     {
-        public bool exists;
+        if (UnityServices.State != ServicesInitializationState.Initialized)
+        {
+            await UnityServices.InitializeAsync();
+            if (!AuthenticationService.Instance.IsSignedIn)
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        }
     }
 
-    public void SaveUsername()
+    public async void SaveUsername()
     {
-        Debug.Log("Speichere Benutzernamen: " + usernameInput.text.Trim());
         string username = usernameInput.text.Trim();
 
         if (string.IsNullOrWhiteSpace(username))
         {
-            Debug.LogWarning("Benutzername darf nicht leer sein.");
             feedbackText.text = "Name darf nicht leer sein.";
             return;
         }
 
-        StartCoroutine(CheckUsernameExists(username));
-    }
+        feedbackText.text = "Wird gespeichert...";
 
-    private IEnumerator CheckUsernameExists(string username)
-    {
-        Debug.Log("Überprüfe, ob Benutzername existiert: " + username);
-        string url = "https://api.benjo.online/username-exists?name=" + UnityWebRequest.EscapeURL(username);
-        UnityWebRequest request = UnityWebRequest.Get(url);
-        yield return request.SendWebRequest();
-
-        if (request.result != UnityWebRequest.Result.Success)
+        try
         {
-            Debug.LogError("Fehler beim Überprüfen des Benutzernamens: " + request.error);
-            feedbackText.text = "Serverfehler: " + request.error;
-            yield break;
-        }
-
-        UsernameCheckResponse response = JsonUtility.FromJson<UsernameCheckResponse>(request.downloadHandler.text);
-
-        if (response.exists)
-        {
-            Debug.Log("Benutzername bereits vergeben: " + username);
-            feedbackText.text = "Name bereits vergeben.";
-        }
-        else
-        {
+            await AuthenticationService.Instance.UpdatePlayerNameAsync(username);
             PlayerPrefs.SetString("Username", username);
             PlayerPrefs.Save();
             Debug.Log("Username gespeichert, Lade Mainmenu");
             SceneManager.LoadScene("MainMenu");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Fehler beim Setzen des Namens: " + e.Message);
+            feedbackText.text = "Fehler beim Speichern: " + e.Message;
         }
     }
 }

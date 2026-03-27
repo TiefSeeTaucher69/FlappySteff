@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class LogicScript : MonoBehaviour
@@ -85,13 +86,17 @@ public class LogicScript : MonoBehaviour
         gameOverScreen.SetActive(true);
         Cursor.visible = true;
 
+        // Controller-Fokus auf ersten Button setzen
+        var firstButton = gameOverScreen.GetComponentInChildren<Button>();
+        if (firstButton != null)
+            EventSystem.current?.SetSelectedGameObject(firstButton.gameObject);
+
         if (playerScore > highScore)
         {
             PlayerPrefs.SetInt("Highscore", playerScore);
             PlayerPrefs.Save();
             Debug.Log("New high score saved: " + playerScore);
-            string username = PlayerPrefs.GetString("Username", "Anonymous");
-            StartCoroutine(leaderboardSenderScript.SendScore(username, playerScore));
+            _ = leaderboardSenderScript.SendScore(playerScore);
         }
         else
         {

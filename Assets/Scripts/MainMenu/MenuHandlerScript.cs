@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 using static LeaderboardSenderScript;
 
 public class MenuHandlerScript : MonoBehaviour
@@ -27,9 +29,16 @@ public class MenuHandlerScript : MonoBehaviour
         SceneManager.LoadScene("ItemShop");
     }
 
-    void Start()
+    async void Start()
     {
         Cursor.visible = true;
+
+        if (UnityServices.State != ServicesInitializationState.Initialized)
+        {
+            await UnityServices.InitializeAsync();
+            if (!AuthenticationService.Instance.IsSignedIn)
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        }
 
         int highscore = PlayerPrefs.GetInt("Highscore", 0);
         highscoreText.text = highscore.ToString();
@@ -38,8 +47,8 @@ public class MenuHandlerScript : MonoBehaviour
         string username = PlayerPrefs.GetString("Username", "Guest");
         usernameText.text = username.ToString();
 
-        Debug.Log("Starte GetScores Coroutine");
-        StartCoroutine(leaderboardGetterScript.GetScores(ShowScores));
+        Debug.Log("Starte GetScores");
+        _ = leaderboardGetterScript.GetScores(ShowScores);
 
         cannabisStash.text = PlayerPrefs.GetInt("CannabisStash", 0).ToString();
         Debug.Log("Cannabis stash loaded: " + cannabisStash.text);
@@ -70,7 +79,7 @@ public class MenuHandlerScript : MonoBehaviour
 
     public void ShowScores(List<ScoreData> scores)
     {
-        Debug.Log(scores == null ? "ShowScores: scores ist null" : $"ShowScores: {scores.Count} Einträge");
+        Debug.Log(scores == null ? "ShowScores: scores ist null" : $"ShowScores: {scores.Count} Eintrï¿½ge");
         if (scores == null)
         {
             Debug.LogError("ShowScores wurde mit null aufgerufen.");

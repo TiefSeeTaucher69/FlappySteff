@@ -30,7 +30,7 @@ public class SteffScript : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         // === Lade Skin ===
-        string selectedSkin = PlayerPrefs.GetString("ActiveSkin", "steff-bird");
+        string selectedSkin = PlayerPrefs.GetString("ActiveSkin", "benjo-bird");
         Sprite skinSprite = Resources.Load<Sprite>("Skins/" + selectedSkin);
 
         if (skinSprite != null)
@@ -40,12 +40,12 @@ public class SteffScript : MonoBehaviour
             // Skalierung abh�ngig vom Skin
             if (selectedSkin == "tom-bird")
             {
-                Debug.Log("Skin '" + selectedSkin + "' gefunden. Skalierung 1.2x1.2x1");
+                Debug.Log("Skin '" + selectedSkin + "' gefunden. Skalierung 0.8x0.7x1");
                 transform.localScale = new Vector3(0.8f, 0.7f, 1f); // Tom-Bird Gr��e
             }
-            else if (selectedSkin == "benjo-bird")
+            else if (selectedSkin == "ginger-bird")
             {
-                transform.localScale = new Vector3(0.8f, 0.8f, 1f); // Benjo-Bird Gr��e
+                transform.localScale = new Vector3(0.8f, 0.7f, 1f); // Benjo-Bird Gr��e
             }
             else if (selectedSkin == "bennet-bird")
             {
@@ -53,19 +53,19 @@ public class SteffScript : MonoBehaviour
             }
             else if (selectedSkin == "jan-bird")
             {
-                transform.localScale = new Vector3(0.8f, 0.7f, 1f); // Bennet-Bird Gr��e
+                transform.localScale = new Vector3(0.8f, 0.7f, 1f); // Jan-Bird Gr��e
             }
             else
             {
-                Debug.Log("Standard-Skin 'steff-bird' verwendet. Skalierung 1x1x1");
-                transform.localScale = new Vector3(0.6f, 0.6f, 1f); // Standardgr��e f�r steff-bird
+                Debug.Log("Standard-Skin 'benjo-bird' verwendet. Skalierung 0.8x0.8x1");
+                transform.localScale = new Vector3(0.8f, 0.8f, 1f); // Standardgröße für steff-bird
             }
         }
         else
         {
-            Debug.LogWarning("Sprite nicht gefunden f�r Skin: " + selectedSkin + ". Verwende steff-bird als Fallback.");
-            spriteRenderer.sprite = Resources.Load<Sprite>("Skins/steff-bird");
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            Debug.LogWarning("Sprite nicht gefunden f�r Skin: " + selectedSkin + ". Verwende benjo-bird als Fallback.");
+            spriteRenderer.sprite = Resources.Load<Sprite>("Skins/benjo-bird");
+            transform.localScale = new Vector3(0.8f, 0.7f, 1f);
         }
 
         // Joint Offset setzen
@@ -73,13 +73,13 @@ public class SteffScript : MonoBehaviour
         {
             switch (selectedSkin)
             {
-                case "steff-bird":
+                case "benjo-bird":
                     jointOffset.localPosition = new Vector3(1.57f, -0.19f, -0.1f);
                     break;
                 case "tom-bird":
                     jointOffset.localPosition = new Vector3(1.75f, -0.15f, -0.1f);
                     break;
-                case "benjo-bird":
+                case "ginger-bird":
                     jointOffset.localPosition = new Vector3(1.7f, +0.1f, -0.1f);
                     break;
                 case "bennet-bird":

@@ -12,9 +12,11 @@ public class LaserManager : MonoBehaviour
 
     private bool isOnCooldown = false;
     private float cooldownTimer = 0f;
+    private SteffScript steff;
 
     void Start()
     {
+        steff = FindObjectOfType<SteffScript>();
         // UI aktivieren nur wenn Item gekauft und ausgewählt
         if (PlayerPrefs.GetInt("HasLaserItem", 0) == 1 && PlayerPrefs.GetString("ActiveItem", "") == "Laser")
         {
@@ -31,6 +33,8 @@ public class LaserManager : MonoBehaviour
         if (PlayerPrefs.GetString("ActiveItem", "") != "Laser") return;
 
         HandleCooldownUI();
+
+        if (steff != null && !steff.steffIsAlive) return;
 
         if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.JoystickButton3)) && !isOnCooldown)
         {

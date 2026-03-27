@@ -10,6 +10,8 @@ public class CursorManager : MonoBehaviour
     private bool isPausedExtern = false;
     private Vector3 lastMousePosition;
     private bool usingController = false;
+    private SteffScript cachedSteff;
+    private string cachedScene = "";
 
     void Awake()
     {
@@ -46,11 +48,19 @@ public class CursorManager : MonoBehaviour
 
     void HandleInGameScene()
     {
-        // Pausezustand über externes Script (SteffScript) holen
-        SteffScript steff = FindObjectOfType<SteffScript>();
-        isPausedExtern = (steff != null) ? steff.IsPaused() : false;
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (cachedScene != currentScene)
+        {
+            cachedScene = currentScene;
+            cachedSteff = null;
+        }
+        if (cachedSteff == null)
+            cachedSteff = FindObjectOfType<SteffScript>();
 
-        if (isPausedExtern)
+        isPausedExtern = (cachedSteff != null) && cachedSteff.IsPaused();
+        bool isDead = (cachedSteff != null) && !cachedSteff.steffIsAlive;
+
+        if (isPausedExtern || isDead)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;

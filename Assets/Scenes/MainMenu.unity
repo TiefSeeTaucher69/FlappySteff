@@ -1917,7 +1917,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 26, y: 402}
-  m_SizeDelta: {x: 757.92, y: 186.9}
+  m_SizeDelta: {x: 931.62, y: 186.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &572387179
 MonoBehaviour:
@@ -1941,7 +1941,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: fd39d1b811d31854a88e308372c05d83, type: 3}
-    m_FontSize: 129
+    m_FontSize: 102
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -1952,7 +1952,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Flappy Steff
+  m_Text: Scuba Man takes off
 --- !u!222 &572387180
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2027,7 +2027,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
+    m_Top: 12
     m_Bottom: 0
   m_ChildAlignment: 1
   m_Spacing: 10
@@ -2674,7 +2674,6 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
-  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -2682,6 +2681,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &855555194
 GameObject:
   m_ObjectHideFlags: 0
@@ -3662,7 +3662,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 4037809479146716317, guid: a00fc7eea2677454b8f375ef50f72fa5, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 4e164c98b8a881743bddbf159ee007e7, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 4e164c98b8a881743bddbf159ee007e7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.504
@@ -4526,7 +4526,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 4037809479146716317, guid: a00fc7eea2677454b8f375ef50f72fa5, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 4e164c98b8a881743bddbf159ee007e7, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 4e164c98b8a881743bddbf159ee007e7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.504
