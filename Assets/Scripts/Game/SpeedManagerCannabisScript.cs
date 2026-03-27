@@ -9,9 +9,9 @@ public class SpeedManagerCannabisScript : MonoBehaviour
     void Awake()
     {
         // Sicherstellen, dass es nur eine Instanz gibt
-        if (FindObjectsOfType<SpeedManager>().Length > 1)
+        if (FindObjectsOfType<SpeedManagerCannabisScript>().Length > 1)
         {
-            Debug.LogWarning("Mehrere SpeedManager vorhanden – das sollte nicht passieren!");
+            Debug.LogWarning("Mehrere SpeedManager vorhanden ï¿½ das sollte nicht passieren!");
         }
     }
     void Update()

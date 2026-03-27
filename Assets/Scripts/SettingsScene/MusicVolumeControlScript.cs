@@ -26,12 +26,11 @@ public class MusicVolumeControl : MonoBehaviour
     {
         // Umwandlung von linearem Slider-Wert (0-1) in logarithmische Dezibel-Skala
         // Bei 0 Wert -80 dB (quasi stumm), sonst 20*log10(value)
-        Debug.Log("SetVolume für Music aufgerufen mit Wert: " + value);
         Debug.Log("Setting Music Volume: " + value);
         mixer.SetFloat("MusicVolume", value > 0 ? Mathf.Log10(value) * 20 : -80);
 
         // Speichern
         PlayerPrefs.SetFloat("MusicVolume", value);
-        PlayerPrefs.Save();  // Sicherstellen, dass die Änderungen gespeichert werden
+        PlayerPrefs.Save();  // Sicherstellen, dass die ï¿½nderungen gespeichert werden
     }
 }

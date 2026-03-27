@@ -59,7 +59,6 @@ public class MenuHandlerScript : MonoBehaviour
         {
             missionManager.OnMissionsLoaded += OnMissionsLoaded;
             missionManager.weeklyMissionRewardScript = weeklyMissionRewardScript;
-            missionManager.OnMissionsLoaded += OnMissionsLoaded;
             // Jetzt Missionen neu laden und UI danach updaten
             missionManager.ReloadMissions();
         }
