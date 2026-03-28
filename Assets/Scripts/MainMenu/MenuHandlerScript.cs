@@ -16,6 +16,7 @@ public class MenuHandlerScript : MonoBehaviour
     public GameObject scoreEntryPrefab; // Prefab for displaying each score entry
     public WeeklyMissionUI weeklyMissionUI; // Reference to the WeeklyMissionUI script
     public WeeklyMissionRewardScript weeklyMissionRewardScript; // Inspector zuweisen
+    public GameObject quitPanel;
 
     public void StartGame()
     {
@@ -72,13 +73,16 @@ public class MenuHandlerScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
         {
-            SceneManager.LoadScene("EscapeScene");
+            if (quitPanel != null) quitPanel.SetActive(true);
         }
     }
 
+    public void QuitGame() => Application.Quit();
+    public void CloseQuitPanel() { if (quitPanel != null) quitPanel.SetActive(false); }
+
     public void ShowScores(List<ScoreData> scores)
     {
-        Debug.Log(scores == null ? "ShowScores: scores ist null" : $"ShowScores: {scores.Count} Eintr�ge");
+        Debug.Log(scores == null ? "ShowScores: scores ist null" : $"ShowScores: {scores.Count} Eintr\u00e4ge");
         if (scores == null)
         {
             Debug.LogError("ShowScores wurde mit null aufgerufen.");

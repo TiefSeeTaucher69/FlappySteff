@@ -80,7 +80,7 @@ public class SteffScript : MonoBehaviour
                     jointOffset.localPosition = new Vector3(1.75f, -0.15f, -0.1f);
                     break;
                 case "ginger-bird":
-                    jointOffset.localPosition = new Vector3(1.7f, +0.1f, -0.1f);
+                    jointOffset.localPosition = new Vector3(1.7f, -0.5f, -0.1f);
                     break;
                 case "bennet-bird":
                     jointOffset.localPosition = new Vector3(1.9f, -0.35f, -0.1f);
