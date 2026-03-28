@@ -8,9 +8,9 @@ using static LeaderboardSenderScript;
 
 public class MenuHandlerScript : MonoBehaviour
 {
-    public Text highscoreText;
-    public Text cannabisStash;
-    public Text usernameText;
+    public TMPro.TMP_Text highscoreText;
+    public TMPro.TMP_Text cannabisStash;
+    public TMPro.TMP_Text usernameText;
     public LeaderboardGetterScript leaderboardGetterScript; // Reference to the script that fetches scores
     public Transform scoreListContainer;
     public GameObject scoreEntryPrefab; // Prefab for displaying each score entry
@@ -96,7 +96,7 @@ public class MenuHandlerScript : MonoBehaviour
 
             GameObject entryGO = Instantiate(scoreEntryPrefab, scoreListContainer);
             Debug.Log(entryGO.name);
-            Text[] texts = entryGO.GetComponentsInChildren<Text>();
+            TMPro.TMP_Text[] texts = entryGO.GetComponentsInChildren<TMPro.TMP_Text>();
             if (texts.Length >= 2)
             {
                 texts[0].text = entry.username;

@@ -6,8 +6,8 @@ using Unity.Services.Core;
 
 public class FirstOpen : MonoBehaviour
 {
-    public InputField usernameInput;
-    public Text feedbackText;
+    public TMPro.TMP_InputField usernameInput;
+    public TMPro.TMP_Text feedbackText;
 
     async void Start()
     {

@@ -16,10 +16,10 @@ public class BootUpdateManager : MonoBehaviour
 
     [Header("UI")]
     public GameObject updatePanel;       // Panel mit Buttons und Info
-    public Text updateText;
+    public TMPro.TMP_Text updateText;
     public Button updateButton;
     public Button skipButton;
-    public Text releaseNotesText; // Im Inspector zuweisen
+    public TMPro.TMP_Text releaseNotesText; // Im Inspector zuweisen
 
     private string installerUrl = "";
     private string installerFilePath = "";

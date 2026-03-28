@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI; // Für Text oder TMP_Text
 using System.Collections;
 
@@ -7,7 +7,7 @@ public class ShrinkManager : MonoBehaviour
     public float shrinkDuration = 5f;
     public float cooldownTime = 10f;
     public Vector3 shrinkScale = new Vector3(0.5f, 0.5f, 1f);
-    public Text cooldownText; // Zeigt Cooldown oder Status an
+    public TMPro.TMP_Text cooldownText; // Zeigt Cooldown oder Status an
     public GameObject shrinkUI; // UI-Element, das du bei Besitz aktivierst
 
     private Vector3 originalScale;

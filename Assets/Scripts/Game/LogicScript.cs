@@ -8,8 +8,8 @@ public class LogicScript : MonoBehaviour
 {
     public int playerScore;
     public int highScore;
-    public Text scoreText;
-    public Text cannabisStashText;
+    public TMPro.TMP_Text scoreText;
+    public TMPro.TMP_Text cannabisStashText;
     public GameObject gameOverScreen;
     public GameObject menuScreen;
     public LeaderboardSenderScript leaderboardSenderScript;

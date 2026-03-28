@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ResolutionSettingsScript : MonoBehaviour
 {
-    public Dropdown resolutionDropdown;
+    public TMPro.TMP_Dropdown resolutionDropdown;
     public Toggle vsyncToggle;
     Resolution[] resolutions;
 
@@ -65,6 +65,6 @@ public class ResolutionSettingsScript : MonoBehaviour
     {
         Resolution res = resolutions[index];
         Screen.SetResolution(res.width, res.height, Screen.fullScreenMode, res.refreshRate);
-        Debug.Log("Auflösung gesetzt auf: " + res.width + "x" + res.height);
+        Debug.Log("Auflï¿½sung gesetzt auf: " + res.width + "x" + res.height);
     }
 }

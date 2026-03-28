@@ -1,16 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
 public class WeeklyMissionRewardScript : MonoBehaviour
 {
     public GameObject panel;
-    public Text statusText;
+    public TMPro.TMP_Text statusText;
     public Button collectButton;
     public Image rewardImage;
     public AudioSource audioSource;
     public Sprite rewardSprite;
-    public Text cannabisStashText;
+    public TMPro.TMP_Text cannabisStashText;
 
     public int cannabisReward = 15;
 

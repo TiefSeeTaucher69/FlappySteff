@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -7,7 +7,7 @@ public class LaserManager : MonoBehaviour
     public GameObject laserPrefab;
     public Transform firePoint;
     public float cooldownTime = 5f;
-    public Text cooldownText; // Anzeige wie "Bereit!" oder "Bereit in: X.Xs"
+    public TMPro.TMP_Text cooldownText; // Anzeige wie "Bereit!" oder "Bereit in: X.Xs"
     public GameObject laserUI; // UI-Element aktivieren bei Itembesitz
 
     private bool isOnCooldown = false;

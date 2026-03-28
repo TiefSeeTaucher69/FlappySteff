@@ -9,11 +9,11 @@ public class DailyReward : MonoBehaviour
 
     [Header("UI Elemente")]
     public GameObject panel;
-    public Text statusText;
+    public TMPro.TMP_Text statusText;
     public Button rewardButton;
     public Image rewardImage;
     public Sprite rewardSprite;
-    public Text cannabisStashText;
+    public TMPro.TMP_Text cannabisStashText;
     
 
 

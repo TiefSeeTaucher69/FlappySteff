@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class VideoSettingsInGameScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public Dropdown fpsDropdown; // Dropdown für FPS Cap
-    public const string PlayerPrefsKey = "FPSCap"; // Schlüssel für PlayerPrefs
-    public Dropdown resolutionDropdown;
+    public TMPro.TMP_Dropdown fpsDropdown; // Dropdown fï¿½r FPS Cap
+    public const string PlayerPrefsKey = "FPSCap"; // Schlï¿½ssel fï¿½r PlayerPrefs
+    public TMPro.TMP_Dropdown resolutionDropdown;
     public Toggle vsyncToggle;
     Resolution[] resolutions;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -30,14 +30,14 @@ public class VideoSettingsInGameScript : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        // Listener temporär entfernen, damit beim Setzen des Werts kein Event feuert
+        // Listener temporï¿½r entfernen, damit beim Setzen des Werts kein Event feuert
         fpsDropdown.onValueChanged.RemoveAllListeners();
 
         fpsDropdown.value = savedIndex;
 
         ApplySetting(savedIndex);
 
-        // Listener wieder hinzufügen
+        // Listener wieder hinzufï¿½gen
         fpsDropdown.onValueChanged.AddListener(OnDropdownChanged);
 
 
@@ -130,6 +130,6 @@ public class VideoSettingsInGameScript : MonoBehaviour
     {
         Resolution res = resolutions[index];
         Screen.SetResolution(res.width, res.height, Screen.fullScreenMode, res.refreshRate);
-        Debug.Log("Auflösung gesetzt auf: " + res.width + "x" + res.height);
+        Debug.Log("Auflï¿½sung gesetzt auf: " + res.width + "x" + res.height);
     }
 }

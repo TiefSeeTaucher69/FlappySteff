@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
@@ -7,9 +7,9 @@ public class WeeklyMissionUI : MonoBehaviour
     [System.Serializable]
     public class MissionUIEntry
     {
-        public Text descriptionText;
+        public TMPro.TMP_Text descriptionText;
         public Slider progressBar;
-        public Text progressText;
+        public TMPro.TMP_Text progressText;
         public Image completedIcon;
     }
 

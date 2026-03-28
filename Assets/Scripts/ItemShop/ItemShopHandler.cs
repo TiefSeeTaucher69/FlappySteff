@@ -6,91 +6,91 @@ using UnityEngine.SceneManagement;
 public class ItemShopHandler : MonoBehaviour
 {
     // Stash
-    public Text cannabisStashText;
-    public Text cannabisStashTextPage2;
-    public Text cannabisStashTextPage3;
+    public TMPro.TMP_Text cannabisStashText;
+    public TMPro.TMP_Text cannabisStashTextPage2;
+    public TMPro.TMP_Text cannabisStashTextPage3;
     public int CannabisStash;
 
     // Invincible
     public int InvincibleItemCost = 50;
     public GameObject invincibleItemBuyButton;
-    public Text invincibleItemBuyText;
+    public TMPro.TMP_Text invincibleItemBuyText;
     public GameObject invincibleBought;
     public Button invincibleActivateButton;
-    public Text invincibleActivateButtonText;
+    public TMPro.TMP_Text invincibleActivateButtonText;
 
     // Shrink
     public int ShrinkItemCost = 50;
     public GameObject shrinkItemBuyButton;
-    public Text shrinkItemBuyText;
+    public TMPro.TMP_Text shrinkItemBuyText;
     public GameObject shrinkBought;
     public Button shrinkActivateButton;
-    public Text shrinkActivateButtonText;
+    public TMPro.TMP_Text shrinkActivateButtonText;
 
     // Laser Shot
     public int LaserItemCost = 50;
     public GameObject laserItemBuyButton;
-    public Text laserItemBuyText;
+    public TMPro.TMP_Text laserItemBuyText;
     public GameObject laserBought;
     public Button laserActivateButton;
-    public Text laserActivateButtonText;
+    public TMPro.TMP_Text laserActivateButtonText;
 
     // Red Trail
     public int RedTrailCost = 20;
     public GameObject redTrailBuyButton;
-    public Text redTrailBuyText;
+    public TMPro.TMP_Text redTrailBuyText;
     public GameObject redTrailBought;
     public Button redTrailActivateButton;
-    public Text redTrailActivateButtonText;
+    public TMPro.TMP_Text redTrailActivateButtonText;
 
     // Purple Trail
     public int PurpleTrailCost = 20;
     public GameObject purpleTrailBuyButton;
-    public Text purpleTrailBuyText;
+    public TMPro.TMP_Text purpleTrailBuyText;
     public GameObject purpleTrailBought;
     public Button purpleTrailActivateButton;
-    public Text purpleTrailActivateButtonText;
+    public TMPro.TMP_Text purpleTrailActivateButtonText;
 
     // Blue Trail
     public int BlueTrailCost = 20;
     public GameObject blueTrailBuyButton;
-    public Text blueTrailBuyText;
+    public TMPro.TMP_Text blueTrailBuyText;
     public GameObject blueTrailBought;
     public Button blueTrailActivateButton;
-    public Text blueTrailActivateButtonText;
+    public TMPro.TMP_Text blueTrailActivateButtonText;
 
     // Skins
     public int TomBirdCost = 25;
     public GameObject tomBirdBuyButton;
-    public Text tomBirdBuyText;
+    public TMPro.TMP_Text tomBirdBuyText;
     public GameObject tomBirdBought;
     public Button tomBirdActivateButton;
-    public Text tomBirdActivateButtonText;
+    public TMPro.TMP_Text tomBirdActivateButtonText;
 
     public int BennetBirdCost = 25;
     public GameObject bennetBirdBuyButton;
-    public Text bennetBirdBuyText;
+    public TMPro.TMP_Text bennetBirdBuyText;
     public GameObject bennetBirdBought;
     public Button bennetBirdActivateButton;
-    public Text bennetBirdActivateButtonText;
+    public TMPro.TMP_Text bennetBirdActivateButtonText;
 
     public int GingerBirdCost = 25;
     public GameObject gingerBirdBuyButton;
-    public Text gingerBirdBuyText;
+    public TMPro.TMP_Text gingerBirdBuyText;
     public GameObject gingerBirdBought;
     public Button gingerBirdActivateButton;
-    public Text gingerBirdActivateButtonText;
+    public TMPro.TMP_Text gingerBirdActivateButtonText;
 
     public int JanBirdCost = 25;
     public GameObject janBirdBuyButton;
-    public Text janBirdBuyText;
+    public TMPro.TMP_Text janBirdBuyText;
     public GameObject janBirdBought;
     public Button janBirdActivateButton;
-    public Text janBirdActivateButtonText;
+    public TMPro.TMP_Text janBirdActivateButtonText;
 
     // Benjo Bird (default skin, always owned)
     public Button benjoBirdActivateButton;
-    public Text benjoBirdActivateButtonText;
+    public TMPro.TMP_Text benjoBirdActivateButtonText;
 
     void Start()
     {

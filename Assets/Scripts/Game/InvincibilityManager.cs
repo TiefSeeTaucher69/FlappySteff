@@ -6,7 +6,7 @@ public class InvincibilityManager : MonoBehaviour
 {
     public Collider2D playerCollider;
     public SpriteRenderer spriteRenderer;
-    public Text cooldownText; // Oder TMP_Text f�r TextMeshPro
+    public TMPro.TMP_Text cooldownText; // Oder TMP_Text f�r TextMeshPro
 
     public float invincibilityDuration = 2f;
     public float cooldownTime = 10f;
