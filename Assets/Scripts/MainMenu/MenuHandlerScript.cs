@@ -101,10 +101,20 @@ public class MenuHandlerScript : MonoBehaviour
             GameObject entryGO = Instantiate(scoreEntryPrefab, scoreListContainer);
             Debug.Log(entryGO.name);
             TMPro.TMP_Text[] texts = entryGO.GetComponentsInChildren<TMPro.TMP_Text>();
-            if (texts.Length >= 2)
+            if (texts.Length >= 3)
             {
-                texts[0].text = entry.username;
-                texts[1].text = entry.score.ToString();
+                texts[0].text = "#" + entry.rank;
+                texts[1].text = entry.username;
+                texts[2].text = entry.score.ToString();
+
+                Color entryColor = entry.rank switch
+                {
+                    1 => new Color(1.00f, 0.84f, 0.00f), // Gold
+                    2 => new Color(0.75f, 0.75f, 0.75f), // Silber
+                    3 => new Color(0.80f, 0.50f, 0.20f), // Bronze
+                    _ => Color.white
+                };
+                foreach (var t in texts) t.color = entryColor;
             }
         }
     }

@@ -24,5 +24,6 @@ public class LeaderboardSenderScript : MonoBehaviour
     {
         public string username;
         public int score;
+        public int rank;
     }
 }

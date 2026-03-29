@@ -24,7 +24,8 @@ public class LeaderboardGetterScript : MonoBehaviour
                 scores.Add(new ScoreData
                 {
                     username = entry.PlayerName,
-                    score = (int)entry.Score
+                    score    = (int)entry.Score,
+                    rank     = entry.Rank + 1
                 });
             }
             callback(scores);
