@@ -27,12 +27,6 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Scenes/MainMenu.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/ItemShop.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/EscapeScene.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/SettingsScene.unity
-  - m_enabled: 1
     m_path: Assets/Scenes/GameScene.unity
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
@@ -50,7 +44,7 @@ MonoBehaviour:
     - line: '|   useOnDemandResources: 0'
     - line: '|   accelerometerFrequency: 60'
     - line: '|   companyName: Benjo'
-    - line: '|   productName: Flappy Steff'
+    - line: '|   productName: Scuba Man takes off'
     - line: '|   defaultCursor: {instanceID: 0}'
     - line: '|   cursorHotspot: {x: 0, y: 0}'
     - line: '|   m_SplashScreenBackgroundColor: {r: 0.12156863, g: 0.12156863, b:
@@ -181,7 +175,7 @@ MonoBehaviour:
     - line: '|   loadStoreDebugModeEnabled: 0'
     - line: '|   visionOSBundleVersion: 1.0'
     - line: '|   tvOSBundleVersion: 1.0'
-    - line: '|   bundleVersion: 1.0.24'
+    - line: '|   bundleVersion: 2.0.0'
     - line: '|   preloadedAssets:'
     - line: '|   - {fileID: 24100000, guid: a00fc7eea2677454b8f375ef50f72fa5, type:
         2}'
@@ -339,7 +333,7 @@ MonoBehaviour:
     - line: '|   - m_BuildTarget: '
     - line: '|     m_Icons:'
     - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {fileID: 2800000, guid: 2004e64d27f83634b8f86ec10ec037ad,
+    - line: '|       m_Icon: {fileID: 2800000, guid: f4b1c9fa1c9638e4383a85806fea26ff,
         type: 3}'
     - line: '|       m_Width: 128'
     - line: '|       m_Height: 128'

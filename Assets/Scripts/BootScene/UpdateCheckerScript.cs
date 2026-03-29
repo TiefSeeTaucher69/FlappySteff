@@ -139,7 +139,7 @@ public class BootUpdateManager : MonoBehaviour
     IEnumerator DownloadAndInstall()
     {
         updateText.text = "L�dt neue Version, Spiel NICHT manuell schlie�en...";
-        string tempPath = Path.Combine(Application.persistentDataPath, "UpdateInstaller.exe");
+        string tempPath = Path.Combine(Application.persistentDataPath, "SMTO_UpdateInstaller.exe");
         installerFilePath = tempPath;
 
         UnityWebRequest request = UnityWebRequest.Get(installerUrl);
