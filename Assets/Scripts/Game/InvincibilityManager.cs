@@ -21,24 +21,23 @@ public class InvincibilityManager : MonoBehaviour
     {
         steff = FindObjectOfType<SteffScript>();
 
-        if ( PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1 && PlayerPrefs.GetString("ActiveItem", "") == "Invincible")
-        {
-            invincibilityUI.SetActive(true);
-        } else
-        {
-            invincibilityUI.SetActive(false);
-        }
+        bool isRankedItem = RankedManager.IsRanked && RankedManager.WeeklyItem == "Invincible";
+        bool isEquipped = PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1 && PlayerPrefs.GetString("ActiveItem", "") == "Invincible";
+        invincibilityUI.SetActive(isEquipped || isRankedItem);
     }
+
     void Update()
     {
-        if (PlayerPrefs.GetString("ActiveItem", "") != "Invincible") return;
+        bool isRankedItem = RankedManager.IsRanked && RankedManager.WeeklyItem == "Invincible";
+        if (PlayerPrefs.GetString("ActiveItem", "") != "Invincible" && !isRankedItem) return;
         HandleCooldownUI();
 
         if (steff != null && !steff.steffIsAlive) return;
 
         if ((Input.GetKeyDown(KeyCode.E) && !isInvincible && !isOnCooldown) || (Input.GetKeyDown(KeyCode.Mouse0) && !isInvincible && !isOnCooldown) || (Input.GetKeyDown(KeyCode.JoystickButton3) && !isInvincible && !isOnCooldown))
         {
-            if (PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1)
+            bool hasItem = PlayerPrefs.GetInt("HasInvincibleItem", 0) == 1 || isRankedItem;
+            if (hasItem)
             {
                 StartCoroutine(InvincibilityCoroutine());
             }

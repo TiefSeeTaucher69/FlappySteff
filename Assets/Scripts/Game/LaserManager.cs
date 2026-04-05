@@ -17,20 +17,15 @@ public class LaserManager : MonoBehaviour
     void Start()
     {
         steff = FindObjectOfType<SteffScript>();
-        // UI aktivieren nur wenn Item gekauft und ausgewählt
-        if (PlayerPrefs.GetInt("HasLaserItem", 0) == 1 && PlayerPrefs.GetString("ActiveItem", "") == "Laser")
-        {
-            laserUI.SetActive(true);
-        }
-        else
-        {
-            laserUI.SetActive(false);
-        }
+        bool isRankedItem = RankedManager.IsRanked && RankedManager.WeeklyItem == "Laser";
+        bool isEquipped = PlayerPrefs.GetInt("HasLaserItem", 0) == 1 && PlayerPrefs.GetString("ActiveItem", "") == "Laser";
+        laserUI.SetActive(isEquipped || isRankedItem);
     }
 
     void Update()
     {
-        if (PlayerPrefs.GetString("ActiveItem", "") != "Laser") return;
+        bool isRankedItem = RankedManager.IsRanked && RankedManager.WeeklyItem == "Laser";
+        if (PlayerPrefs.GetString("ActiveItem", "") != "Laser" && !isRankedItem) return;
 
         HandleCooldownUI();
 
@@ -38,7 +33,8 @@ public class LaserManager : MonoBehaviour
 
         if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.JoystickButton3)) && !isOnCooldown)
         {
-            if (PlayerPrefs.GetInt("HasLaserItem", 0) == 1)
+            bool hasItem = PlayerPrefs.GetInt("HasLaserItem", 0) == 1 || isRankedItem;
+            if (hasItem)
             {
                 FireLaser();
                 StartCoroutine(StartCooldown());

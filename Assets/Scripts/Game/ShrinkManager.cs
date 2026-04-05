@@ -21,20 +21,15 @@ public class ShrinkManager : MonoBehaviour
         originalScale = transform.localScale;
         steff = FindObjectOfType<SteffScript>();
 
-        // UI nur aktivieren, wenn Item gekauft
-        if (PlayerPrefs.GetInt("HasShrinkItem", 0) == 1 && PlayerPrefs.GetString("ActiveItem", "") == "Shrink")
-        {
-            shrinkUI.SetActive(true);
-        }
-        else
-        {
-            shrinkUI.SetActive(false);
-        }
+        bool isRankedItem = RankedManager.IsRanked && RankedManager.WeeklyItem == "Shrink";
+        bool isEquipped = PlayerPrefs.GetInt("HasShrinkItem", 0) == 1 && PlayerPrefs.GetString("ActiveItem", "") == "Shrink";
+        shrinkUI.SetActive(isEquipped || isRankedItem);
     }
 
     void Update()
     {
-        if (PlayerPrefs.GetString("ActiveItem", "") != "Shrink") return;
+        bool isRankedItem = RankedManager.IsRanked && RankedManager.WeeklyItem == "Shrink";
+        if (PlayerPrefs.GetString("ActiveItem", "") != "Shrink" && !isRankedItem) return;
         HandleCooldownUI();
 
         if (steff != null && !steff.steffIsAlive) return;
@@ -43,7 +38,8 @@ public class ShrinkManager : MonoBehaviour
             (Input.GetKeyDown(KeyCode.Mouse0) && !isShrunk && !isOnCooldown) ||
             (Input.GetKeyDown(KeyCode.JoystickButton3) && !isShrunk && !isOnCooldown))
         {
-            if (PlayerPrefs.GetInt("HasShrinkItem", 0) == 1)
+            bool hasItem = PlayerPrefs.GetInt("HasShrinkItem", 0) == 1 || isRankedItem;
+            if (hasItem)
             {
                 StartCoroutine(ActivateShrink());
             }

@@ -91,16 +91,34 @@ public class LogicScript : MonoBehaviour
         if (firstButton != null)
             EventSystem.current?.SetSelectedGameObject(firstButton.gameObject);
 
-        if (playerScore > highScore)
+        if (RankedManager.IsRanked)
         {
-            PlayerPrefs.SetInt("Highscore", playerScore);
-            PlayerPrefs.Save();
-            Debug.Log("New high score saved: " + playerScore);
-            _ = leaderboardSenderScript.SendScore(playerScore);
+            int rankedHighScore = PlayerPrefs.GetInt("RankedHighscore", 0);
+            if (playerScore > rankedHighScore)
+            {
+                PlayerPrefs.SetInt("RankedHighscore", playerScore);
+                PlayerPrefs.Save();
+                Debug.Log("Neuer Ranked Highscore: " + playerScore);
+                _ = leaderboardSenderScript.SendRankedScore(playerScore);
+            }
+            else
+            {
+                Debug.Log("Kein neuer Ranked Highscore. Aktueller: " + rankedHighScore);
+            }
         }
         else
         {
-            Debug.Log("Kein neuer Highscore. Aktueller: " + highScore);
+            if (playerScore > highScore)
+            {
+                PlayerPrefs.SetInt("Highscore", playerScore);
+                PlayerPrefs.Save();
+                Debug.Log("New high score saved: " + playerScore);
+                _ = leaderboardSenderScript.SendScore(playerScore);
+            }
+            else
+            {
+                Debug.Log("Kein neuer Highscore. Aktueller: " + highScore);
+            }
         }
 
         int score = playerScore;

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class LeaderboardSenderScript : MonoBehaviour
 {
-    public const string LeaderboardId = "FlappySteffLeaderboard";
+    public const string LeaderboardId = "SMtakesoffLeaderboard";
+    public const string RankedLeaderboardId = "SMtakesoffRankedLeaderboard";
 
     public async Task SendScore(int score)
     {
@@ -16,6 +17,19 @@ public class LeaderboardSenderScript : MonoBehaviour
         catch (System.Exception e)
         {
             Debug.LogError("Fehler beim Senden des Scores: " + e.Message);
+        }
+    }
+
+    public async Task SendRankedScore(int score)
+    {
+        try
+        {
+            await LeaderboardsService.Instance.AddPlayerScoreAsync(RankedLeaderboardId, score);
+            Debug.Log("Ranked Score erfolgreich gesendet: " + score);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Fehler beim Senden des Ranked Scores: " + e.Message);
         }
     }
 

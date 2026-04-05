@@ -4,15 +4,19 @@ public class PipeSpawnScript : MonoBehaviour
 {
     public GameObject pipe;
 
-    public float baseSpawnRate = 3f;       // ursprüngliche Spawnrate bei Startgeschwindigkeit
+    public float baseSpawnRate = 3f;       // ursprï¿½ngliche Spawnrate bei Startgeschwindigkeit
     public float minSpawnRate = 0.5f;      // minimale Spawnrate, damit's nicht unspielbar wird
-    public float startSpeed = 5f;          // Startgeschwindigkeit, muss mit SpeedManager übereinstimmen
+    public float startSpeed = 5f;          // Startgeschwindigkeit, muss mit SpeedManager ï¿½bereinstimmen
     public float heightOffset = 10f;
 
     private float timer = 0f;
+    private System.Random rankedRng;
 
     void Start()
     {
+        if (RankedManager.IsRanked)
+            rankedRng = RankedManager.CreateFreshPipeRng();
+
         spawnPipe(); // Erste Pipe direkt spawnen
     }
 
@@ -36,11 +40,16 @@ public class PipeSpawnScript : MonoBehaviour
 
     void spawnPipe()
     {
-        float lowestPoint = transform.position.y - heightOffset;
-        float highestPoint = transform.position.y + heightOffset;
+        float y;
+        if (RankedManager.IsRanked && rankedRng != null)
+        {
+            y = (float)(rankedRng.NextDouble() * heightOffset * 2 - heightOffset) + transform.position.y;
+        }
+        else
+        {
+            y = Random.Range(transform.position.y - heightOffset, transform.position.y + heightOffset);
+        }
 
-        Instantiate(pipe,
-                    new Vector3(transform.position.x, Random.Range(lowestPoint, highestPoint)),
-                    transform.rotation);
+        Instantiate(pipe, new Vector3(transform.position.x, y), transform.rotation);
     }
 }

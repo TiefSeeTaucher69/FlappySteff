@@ -18,6 +18,25 @@ public class MenuHandlerScript : MonoBehaviour
     public WeeklyMissionRewardScript weeklyMissionRewardScript; // Inspector zuweisen
     public GameObject quitPanel;
 
+    [Header("Play-Bar")]
+    [SerializeField] private Button btnPlayQuickplay;
+    [SerializeField] private Button btnPlayRanked;
+    [SerializeField] private Image indicatorPlayQuickplay;
+    [SerializeField] private Image indicatorPlayRanked;
+    [SerializeField] private GameObject pnlRankedInfo;
+    [SerializeField] private TMPro.TMP_Text txtRankedItem;
+    [SerializeField] private TMPro.TMP_Text txtRankedReset;
+
+    [Header("Scoreboard-Bar")]
+    [SerializeField] private Button btnScoreQuickplay;
+    [SerializeField] private Button btnScoreRanked;
+    [SerializeField] private Image indicatorScoreQuickplay;
+    [SerializeField] private Image indicatorScoreRanked;
+
+    private readonly Color colorActive   = new Color(0.13f, 0.77f, 0.37f, 1f); // #22C55E
+    private readonly Color colorInactive = new Color(0.33f, 0.33f, 0.33f, 1f); // #555555
+    private System.Threading.CancellationTokenSource _scoreCts;
+
     public void StartGame()
     {
         SceneManager.LoadScene("GameScene");
@@ -48,8 +67,16 @@ public class MenuHandlerScript : MonoBehaviour
         string username = PlayerPrefs.GetString("Username", "Guest");
         usernameText.text = username.ToString();
 
-        Debug.Log("Starte GetScores");
-        _ = leaderboardGetterScript.GetScores(ShowScores);
+        RankedManager.IsRanked = false;
+
+        if (btnPlayQuickplay != null) btnPlayQuickplay.onClick.AddListener(OnPlayQuickplay);
+        if (btnPlayRanked != null)    btnPlayRanked.onClick.AddListener(OnPlayRanked);
+        if (btnScoreQuickplay != null) btnScoreQuickplay.onClick.AddListener(OnScoreboardQuickplay);
+        if (btnScoreRanked != null)    btnScoreRanked.onClick.AddListener(OnScoreboardRanked);
+
+        OnPlayQuickplay();
+        OnScoreboardQuickplay();
+        InitRankedInfo();
 
         cannabisStash.text = PlayerPrefs.GetInt("CannabisStash", 0).ToString();
         Debug.Log("Cannabis stash loaded: " + cannabisStash.text);
@@ -80,6 +107,67 @@ public class MenuHandlerScript : MonoBehaviour
     public void QuitGame() => Application.Quit();
     public void CloseQuitPanel() { if (quitPanel != null) quitPanel.SetActive(false); }
 
+    private void OnPlayQuickplay()
+    {
+        RankedManager.IsRanked = false;
+        if (pnlRankedInfo != null) pnlRankedInfo.SetActive(false);
+        if (indicatorPlayQuickplay != null) indicatorPlayQuickplay.color = colorActive;
+        if (indicatorPlayRanked != null)    indicatorPlayRanked.color    = colorInactive;
+    }
+
+    private void OnPlayRanked()
+    {
+        RankedManager.IsRanked = true;
+        if (pnlRankedInfo != null) pnlRankedInfo.SetActive(true);
+        if (indicatorPlayQuickplay != null) indicatorPlayQuickplay.color = colorInactive;
+        if (indicatorPlayRanked != null)    indicatorPlayRanked.color    = colorActive;
+        UpdateRankedResetText();
+    }
+
+    private async void OnScoreboardQuickplay()
+    {
+        _scoreCts?.Cancel();
+        _scoreCts = new System.Threading.CancellationTokenSource();
+        var token = _scoreCts.Token;
+        ClearScores();
+        if (indicatorScoreQuickplay != null) indicatorScoreQuickplay.color = colorActive;
+        if (indicatorScoreRanked != null)    indicatorScoreRanked.color    = colorInactive;
+        var scores = await leaderboardGetterScript.GetScores();
+        if (!token.IsCancellationRequested) ShowScores(scores);
+    }
+
+    private async void OnScoreboardRanked()
+    {
+        _scoreCts?.Cancel();
+        _scoreCts = new System.Threading.CancellationTokenSource();
+        var token = _scoreCts.Token;
+        ClearScores();
+        if (indicatorScoreQuickplay != null) indicatorScoreQuickplay.color = colorInactive;
+        if (indicatorScoreRanked != null)    indicatorScoreRanked.color    = colorActive;
+        var scores = await leaderboardGetterScript.GetRankedScores();
+        if (!token.IsCancellationRequested) ShowScores(scores);
+    }
+
+    private void ClearScores()
+    {
+        foreach (Transform child in scoreListContainer)
+            Destroy(child.gameObject);
+    }
+
+    private void InitRankedInfo()
+    {
+        if (txtRankedItem != null)
+            txtRankedItem.text = "Item: " + RankedManager.GetWeeklyItemDisplayName();
+        UpdateRankedResetText();
+    }
+
+    private void UpdateRankedResetText()
+    {
+        if (txtRankedReset == null) return;
+        System.TimeSpan t = RankedManager.GetTimeUntilReset();
+        txtRankedReset.text = $"Reset in: {(int)t.TotalDays}T {t.Hours}Std {t.Minutes}Min";
+    }
+
     public void ShowScores(List<ScoreData> scores)
     {
         Debug.Log(scores == null ? "ShowScores: scores ist null" : $"ShowScores: {scores.Count} Eintr\u00e4ge");
@@ -99,13 +187,18 @@ public class MenuHandlerScript : MonoBehaviour
             if (entry == null) continue;
 
             GameObject entryGO = Instantiate(scoreEntryPrefab, scoreListContainer);
-            Debug.Log(entryGO.name);
-            TMPro.TMP_Text[] texts = entryGO.GetComponentsInChildren<TMPro.TMP_Text>();
-            if (texts.Length >= 3)
+            Transform rankT     = entryGO.transform.Find("Txt_Rank");
+            Transform usernameT = entryGO.transform.Find("Txt_Username");
+            Transform scoreT    = entryGO.transform.Find("Txt_Score");
+            var txtRankField     = rankT     != null ? rankT.GetComponent<TMPro.TMP_Text>()     : null;
+            var txtUsernameField = usernameT != null ? usernameT.GetComponent<TMPro.TMP_Text>() : null;
+            var txtScoreField    = scoreT    != null ? scoreT.GetComponent<TMPro.TMP_Text>()    : null;
+
+            if (txtRankField != null && txtUsernameField != null && txtScoreField != null)
             {
-                texts[0].text = "#" + entry.rank;
-                texts[1].text = entry.username;
-                texts[2].text = entry.score.ToString();
+                txtRankField.text     = "#" + entry.rank;
+                txtUsernameField.text = entry.username;
+                txtScoreField.text    = entry.score.ToString();
 
                 Color entryColor = entry.rank switch
                 {
@@ -114,9 +207,14 @@ public class MenuHandlerScript : MonoBehaviour
                     3 => new Color(0.80f, 0.50f, 0.20f), // Bronze
                     _ => Color.white
                 };
-                foreach (var t in texts) t.color = entryColor;
+                txtRankField.color     = entryColor;
+                txtUsernameField.color = entryColor;
+                txtScoreField.color    = entryColor;
             }
         }
+
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(scoreListContainer.GetComponent<RectTransform>());
     }
 
     private void OnMissionsLoaded()
@@ -130,6 +228,7 @@ public class MenuHandlerScript : MonoBehaviour
 
     private void OnDestroy()
     {
+        _scoreCts?.Cancel();
         var missionManager = WeeklyMissionManager.Instance;
         if (missionManager != null)
         {
